@@ -36,8 +36,9 @@
         <pageHelper.starter.version>1.2.3</pageHelper.starter.version>
         <leyou.latest.version>1.0.0-SNAPSHOT</leyou.latest.version>
         <fastDFS.client.version>1.26.1-RELEASE</fastDFS.client.version>
+        <org.projectlombok.lombok.version>1.18.12</org.projectlombok.lombok.version>
+        <jpa.version>1.0</jpa.version>
     </properties>
-
     <dependencyManagement>
         <dependencies>
             <!-- springCloud -->
@@ -77,6 +78,18 @@
                 <groupId>com.github.tobato</groupId>
                 <artifactId>fastdfs-client</artifactId>
                 <version>${fastDFS.client.version}</version>
+            </dependency>
+            <!--jap-->
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>persistence-api</artifactId>
+                <version>${jpa.version}</version>
+            </dependency>
+            <!--lombok-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${org.projectlombok.lombok.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
