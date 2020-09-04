@@ -12,7 +12,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  */
 @SpringBootApplication
 @EnableEurekaClient
-@MapperScan("com.leyou.dao.CategoryMapper")
+@MapperScan(basePackages = "com.leyou.dao")
 public class LeyouItemServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(LeyouItemServiceApplication.class, args);

@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,16 +24,18 @@ import java.util.List;
 @RequestMapping("category")
 @RestController
 public class CategoryController {
+
     @Autowired
     private CategoryService categoryService;
     /**
-     * 父id获取分类树形列表
+     * 父id获取分类
      * @date 16:41 2020/9/3
      * @param pid
      * @return org.springframework.http.ResponseEntity<java.util.List<com.leyou.pojo.Category>>
      */
-    @GetMapping("list")
+    @GetMapping("/list")
     public ResponseEntity<List<Category>> queryCategoryByPid(@RequestParam("pid") Long pid) {
+        log.info("category/list");
         if (StringUtils.isEmpty(pid) || pid.intValue() < 0) {
             return ResponseEntity.badRequest().build();
         }

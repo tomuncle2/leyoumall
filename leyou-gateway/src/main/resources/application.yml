@@ -15,3 +15,8 @@ eureka:
 
 zuul:
   prefix: /gateway # 路由路径前缀
+  routes:
+    item-service: /item/**
+#    item-service:
+#      path: /gateway/item/**
+#      serviceId: item-service
