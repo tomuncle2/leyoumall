@@ -38,6 +38,8 @@
         <fastDFS.client.version>1.26.1-RELEASE</fastDFS.client.version>
         <org.projectlombok.lombok.version>1.18.12</org.projectlombok.lombok.version>
         <jpa.version>1.0</jpa.version>
+        <org.apache.commons.commons-lang3.version>3.4</org.apache.commons.commons-lang3.version>
+
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -90,6 +92,12 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${org.projectlombok.lombok.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${org.apache.commons.commons-lang3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

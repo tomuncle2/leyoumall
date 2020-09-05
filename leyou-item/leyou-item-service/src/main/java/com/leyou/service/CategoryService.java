@@ -1,6 +1,7 @@
 package com.leyou.service;
 
 import com.leyou.pojo.Category;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -17,4 +18,12 @@ public interface CategoryService {
      * @return java.util.List<com.leyou.pojo.Category>
      */
     List<Category> queryCategoryByPid(Long pid);
+
+    /**
+     *品牌id查询所有分类
+     * @date 17:02 2020/9/5
+     * @param bid
+     * @return java.util.List<com.leyou.pojo.Category>
+     */
+    List<Category> queryCategoryByBid(Long bid);
 }

@@ -10,8 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
-
 import java.util.List;
 
 /**
@@ -55,5 +55,56 @@ public class BrandServiceImpl implements BrandService {
         PageResult<Brand> pageResult = new PageResult(pageInfo.getTotal(), pageInfo.getPageNum(), list);
         // 分页
         return pageResult;
+    }
+
+    /**
+     * 新增品牌
+     * @date 11:15 2020/9/5
+     * @param brand
+     * @param cids
+     * @return void
+     */
+    @Override
+    @Transactional
+    public boolean saveBrand(Brand brand, List<Long> cids) {
+        int result = brandMapper.insertSelective(brand);
+        if (result < 1) {
+            return false;
+        }
+        cids.stream().forEach((cid)-> {
+            brandMapper.saveCategoryBrand(brand.getId(), cid);
+        });
+        return true;
+    }
+
+    /**
+     * 品牌id查询详情
+     * @date 16:51 2020/9/5
+     * @param id
+     * @return com.leyou.pojo.Brand
+     */
+    @Override
+    public Brand queryBrandById(Long id) {
+        Example example = new Example(Brand.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.orEqualTo("id", id);
+        return brandMapper.selectOneByExample(example);
+    }
+
+    /**
+     * 修改品牌
+     * @date 16:47 2020/9/5
+     * @param brand
+     * @param cids
+     * @return com.leyou.common.result.Result
+     */
+    @Override
+    public boolean updateBrand(Brand brand, List<Long> cids) {
+        int result = brandMapper.updateByPrimaryKey(brand);
+        if (result < 1) {
+            return false;
+        }
+
+        return true;
     }
 }

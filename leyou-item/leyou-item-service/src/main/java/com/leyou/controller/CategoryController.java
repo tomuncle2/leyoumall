@@ -1,5 +1,6 @@
 package com.leyou.controller;
 
+import com.leyou.common.result.Result;
 import com.leyou.pojo.Category;
 import com.leyou.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,7 @@ public class CategoryController {
         log.info("category/list");
         if (StringUtils.isEmpty(pid) || pid.intValue() < 0) {
             return ResponseEntity.badRequest().build();
+
         }
 
         List<Category> list = categoryService.queryCategoryByPid(pid);
@@ -48,5 +50,16 @@ public class CategoryController {
             //找到返回200
             return ResponseEntity.ok(list);
         }
+    }
+
+    /**
+     * 品牌id查询所有分类
+     * @date 16:49 2020/9/5
+     * @param bid
+     * @return com.leyou.common.result.Result
+     */
+    @GetMapping("bid/{bid}")
+    public Result queryCategoryByBid(@RequestParam("bid")Long bid) {
+        return Result.success(categoryService.queryCategoryByBid(bid));
     }
 }

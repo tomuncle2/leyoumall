@@ -36,4 +36,15 @@ public class CategoryServiceImpl implements CategoryService {
         criteria.andEqualTo("parentId",pid);
         return categoryMapper.selectByExample(example);
     }
+
+    /**
+     *
+     * @date 17:02 2020/9/5
+     * @param bid
+     * @return java.util.List<com.leyou.pojo.Category>
+     */
+    @Override
+    public List<Category> queryCategoryByBid(Long bid) {
+        return categoryMapper.queryCategoryByBid(bid);
+    }
 }
