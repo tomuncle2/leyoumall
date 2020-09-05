@@ -7,6 +7,8 @@ import com.leyou.pojo.Brand;
 import com.leyou.service.BrandService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,13 +43,13 @@ public class BrandController {
      * @return org.springframework.http.ResponseEntity<com.leyou.common.page.PageResult<com.leyou.pojo.Brand>>
      */
     @GetMapping("page")
-    public Result<PageResult<Brand>> queryBrandsByPage(
+    public ResponseEntity<PageResult<Brand>> queryBrandsByPage(
              String key,
             @RequestParam(name = "page", defaultValue = "1") Integer pageNum,
             @RequestParam(name = "rows", defaultValue = "10") Integer pageSize,
             @RequestParam String sortBy,
             @RequestParam Boolean desc){
-        return Result.success(brandService.queryBrandsByPage(key, pageNum, pageSize, sortBy, desc));
+        return ResponseEntity.ok(brandService.queryBrandsByPage(key, pageNum, pageSize, sortBy, desc));
     }
 
     /**
@@ -58,11 +60,11 @@ public class BrandController {
      * @return com.leyou.common.result.Result
      */
     @PostMapping
-    public Result saveBrand(Brand brand, @RequestParam("cids")List<Long> cids) {
+    public ResponseEntity saveBrand(Brand brand, @RequestParam("cids")List<Long> cids) {
         if (brandService.saveBrand(brand, cids)) {
-            return Result.success();
+            return ResponseEntity.ok().build();
         } else {
-            return Result.failure(ResultCodeEnum.OPERATION_FAILED);
+            return ResponseEntity.status(HttpStatus.METHOD_FAILURE).build();
         }
     }
 
@@ -73,8 +75,8 @@ public class BrandController {
      * @return com.leyou.common.result.Result
      */
     @GetMapping("/{id}")
-    public Result queryBrandById(@PathVariable("id") Long id){
-        return Result.success();
+    public ResponseEntity<Brand> queryBrandById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(brandService.queryBrandById(id));
     }
 
     /**
@@ -85,7 +87,11 @@ public class BrandController {
      * @return com.leyou.common.result.Result
      */
     @PutMapping
-    public Result updateBrand(Brand brand, @RequestParam("cids")List<Long> cids) {
-        return Result.success();
+    public ResponseEntity updateBrand(Brand brand, @RequestParam("cids")List<Long> cids) {
+        if (brandService.updateBrand(brand, cids)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.METHOD_FAILURE).build();
+        }
     }
 }
