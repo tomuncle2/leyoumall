@@ -1,6 +1,5 @@
 package com.leyou.controller;
 
-import com.leyou.common.result.Result;
 import com.leyou.pojo.Category;
 import com.leyou.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;

@@ -6,8 +6,10 @@ import com.leyou.common.result.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,19 +22,19 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @Slf4j
-@RequestMapping("file")
+//@RequestMapping("upload")
 public class UploadController {
 
     @Autowired
     private UploadService uploadService;
 
-    @PostMapping("upload")
-    public Result upload(MultipartFile file) {
+    @PostMapping("image")
+    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
         String url = uploadService.upload(file);
-        if (StringUtils.isBlank(url)) {
-            return Result.success(url);
+        if (StringUtils.isNotBlank(url)) {
+            return ResponseEntity.ok(url);
         } else {
-            return Result.failure(ResultCodeEnum.OPERATION_FAILED);
+            return ResponseEntity.badRequest().build();
         }
     }
 }

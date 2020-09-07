@@ -22,7 +22,7 @@ import java.util.List;
 public class UploadServiceImpl implements UploadService {
 
     /**允许文件类型*/
-    private static final List<String> CONTENT_TYPES = Arrays.asList("image/jpeg", "image/gif");
+    private static final List<String> CONTENT_TYPES = Arrays.asList("image/png","image/jpeg", "image/gif");
 
     /**
      * 文件上传
@@ -51,7 +51,8 @@ public class UploadServiceImpl implements UploadService {
         }
         // 保存到服务器
         try {
-            file.transferTo(new File("C:\\leyou\\images\\" + fileName));
+            file.transferTo(new File("E:\\github-repository\\leyoumall\\leyou-upload\\src\\main\\resources\\static\\upload\\" + fileName));
+            // nginx代理地址
             return "http://image.leyou.com/" + fileName;
         } catch (IOException e) {
             e.printStackTrace();
