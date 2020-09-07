@@ -2,7 +2,6 @@ package com.itcast.upload.leyouupload.service.impl;
 
 import com.itcast.upload.leyouupload.service.UploadService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

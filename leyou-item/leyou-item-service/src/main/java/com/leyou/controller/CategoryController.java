@@ -9,10 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -59,7 +56,7 @@ public class CategoryController {
      * @return com.leyou.common.result.Result
      */
     @GetMapping("bid/{bid}")
-    public Result queryCategoryByBid(@RequestParam("bid")Long bid) {
-        return Result.success(categoryService.queryCategoryByBid(bid));
+    public ResponseEntity<List<Category>> queryCategoryByBid(@PathVariable("bid")Long bid) {
+        return ResponseEntity.ok(categoryService.queryCategoryByBid(bid));
     }
 }
