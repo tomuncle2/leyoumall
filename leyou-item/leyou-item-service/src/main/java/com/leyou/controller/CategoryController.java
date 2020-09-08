@@ -35,7 +35,6 @@ public class CategoryController {
         log.info("category/list");
         if (StringUtils.isEmpty(pid) || pid.intValue() < 0) {
             return ResponseEntity.badRequest().build();
-
         }
 
         List<Category> list = categoryService.queryCategoryByPid(pid);
@@ -58,4 +57,5 @@ public class CategoryController {
     public ResponseEntity<List<Category>> queryCategoryByBid(@PathVariable("bid")Long bid) {
         return ResponseEntity.ok(categoryService.queryCategoryByBid(bid));
     }
+
 }

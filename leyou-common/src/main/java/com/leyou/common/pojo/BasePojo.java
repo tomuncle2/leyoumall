@@ -48,4 +48,11 @@ public class BasePojo implements Serializable {
      */
     @Column(name = "delete_mark")
     private Integer deleteMark;
+
+    /**参数初始化*/
+    public void init() {
+        this.createTime = new Timestamp(System.currentTimeMillis());
+        this.updateTime = new Timestamp(System.currentTimeMillis());
+        this.deleteMark = 1;
+    }
 }

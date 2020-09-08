@@ -2,6 +2,7 @@ package com.leyou.service;
 
 import com.leyou.common.page.PageResult;
 import com.leyou.common.result.Result;
+import com.leyou.dto.BrandRequest;
 import com.leyou.pojo.Brand;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,9 +56,17 @@ public interface BrandService {
     /**
      * 修改品牌
      * @date 16:47 2020/9/5
-     * @param brand
+     * @param request
      * @param cids
      * @return com.leyou.common.result.Result
      */
-    boolean updateBrand(Brand brand, List<Long> cids);
+    boolean updateBrand(BrandRequest request, List<Long> cids);
+
+    /**
+     * 删除品牌
+     * @date 10:47 2020/9/8
+     * @param bid
+     * @return boolean
+     */
+    boolean deleteCategoryByBid(Long bid);
 }

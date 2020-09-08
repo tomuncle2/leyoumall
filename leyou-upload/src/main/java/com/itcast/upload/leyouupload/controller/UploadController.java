@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @Slf4j
-//@RequestMapping("upload")
+@RequestMapping("upload")
 public class UploadController {
 
     @Autowired

@@ -5,7 +5,6 @@ import com.leyou.pojo.Category;
 import com.leyou.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
@@ -34,6 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
         Example example = new Example(Category.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("parentId",pid);
+        criteria.andEqualTo("deleteMark", true);
         return categoryMapper.selectByExample(example);
     }
 
