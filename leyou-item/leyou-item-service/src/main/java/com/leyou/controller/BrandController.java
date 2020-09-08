@@ -1,14 +1,26 @@
 package com.leyou.controller;
 
+import com.leyou.common.enums.ResultCodeEnum;
 import com.leyou.common.page.PageResult;
+import com.leyou.common.result.Result;
+import com.leyou.dto.BrandRequest;
 import com.leyou.pojo.Brand;
+import com.leyou.pojo.Category;
 import com.leyou.service.BrandService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -79,11 +91,24 @@ public class BrandController {
      * @return com.leyou.common.result.Result
      */
     @PutMapping
-    public ResponseEntity updateBrand(Brand brand, @RequestParam("cids")List<Long> cids) {
+    public ResponseEntity updateBrand(BrandRequest brand, @RequestParam("cids")List<Long> cids) {
         if (brandService.updateBrand(brand, cids)) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(HttpStatus.METHOD_FAILURE).build();
         }
+    }
+
+    @DeleteMapping("bid/{bid}")
+    public ResponseEntity<List<Category>> deleteCategoryByBid(@PathVariable("bid")String bids) {
+        String split = "-";
+        if (bids.contains(split)) {
+            Arrays.stream(bids.split(split)).forEach((bid)->{
+                brandService.deleteCategoryByBid(Long.valueOf(bid));
+            });
+        } else {
+            brandService.deleteCategoryByBid(Long.valueOf(bids));
+        }
+        return ResponseEntity.ok().build();
     }
 }

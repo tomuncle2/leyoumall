@@ -1,6 +1,7 @@
 package com.leyou.dao;
 
 import com.leyou.pojo.Category;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -25,4 +26,13 @@ public interface CategoryMapper extends Mapper<Category> {
      */
     @Select("select id,name,parent_id as parentId,is_parent as isParent,sort from tb_category where id in (select category_id from tb_category_brand where brand_id = #{bid})")
     List<Category> queryCategoryByBid(@Param("bid") Long bid);
+
+    /**
+     * 删除品牌-分类关联信息
+     * @date 10:59 2020/9/8
+     * @param bid
+     * @return int
+     */
+    @Delete("delete from tb_category_brand where brand_id = #{bid}")
+    int deleteCategoryByBid(@Param("bid") Long bid);
 }

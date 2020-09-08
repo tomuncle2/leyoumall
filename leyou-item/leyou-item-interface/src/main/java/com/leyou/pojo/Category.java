@@ -1,5 +1,6 @@
 package com.leyou.pojo;
 
+import com.leyou.common.pojo.BasePojo;
 import lombok.Data;
 
 import javax.persistence.GeneratedValue;
@@ -14,7 +15,7 @@ import javax.persistence.Table;
  */
 @Data
 @Table(name = "tb_category")
-public class Category {
+public class Category extends BasePojo {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
