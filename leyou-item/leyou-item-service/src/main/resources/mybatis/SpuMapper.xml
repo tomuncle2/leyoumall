@@ -1,0 +1,100 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.leyou.dao.SpuMapper">
+
+
+
+
+    <!--查询用户角色-->
+    <resultMap type="com.leyou.dto.SpuDto" id="resourceMapSpuDto">
+        <id column="id" property="id"/>
+        <result column="bname" property="bname"/>
+        <collection property="categories" ofType="com.leyou.pojo.Category">
+            <id property="id" column="cid"/>
+            <result column="cname" property="name"/>
+        </collection>
+    </resultMap>
+
+    <!--用户列表-->
+    <select id="listSpuWithBrandAndCategory" resultMap="resourceMapSpuDto" >
+            SELECT
+        spu.id,
+        category.id AS cid,
+        category.NAME AS cname,
+        brand.NAME AS bname
+    FROM
+        (
+        SELECT
+            id,
+            cid1,
+            cid2,
+            cid3,
+            brand_id
+        FROM
+            `tb_spu`
+        WHERE
+        id IN
+        <foreach collection="list"  open="(" separator="," item="i" close=")" >
+            #{i.id}
+        </foreach>
+            AND valid = 1
+        ) spu
+        LEFT JOIN ( SELECT id, NAME FROM `tb_category` WHERE delete_mark = 1 ORDER BY id ) category ON ( spu.cid1 = category.id OR spu.cid2 = category.id OR spu.cid3 = category.id )
+        LEFT JOIN ( SELECT id, NAME FROM `tb_brand` WHERE delete_mark = 1 ORDER BY id ) brand ON brand.id = spu.brand_id
+    </select>
+
+<!--    &lt;!&ndash;单个用户&ndash;&gt;-->
+<!--    <select id="getManagerAndRole" resultMap="resourceMapManagerAndRoleInfo">-->
+<!--        SELECT-->
+<!--        manager.id,-->
+<!--        manager.password,-->
+<!--        manager.user_name,-->
+<!--        manager.source,-->
+<!--        manager.phone,-->
+<!--        manager.create_time,-->
+<!--        manager.update_time,-->
+<!--        role.id role_id,role.role,role.description,role.available,role.resource_ids-->
+<!--        FROM-->
+<!--        jxb_weixin_user_manager  manager-->
+<!--        INNER JOIN jxb_weixin_user_role_user role_user ON manager.id = role_user.manager_id-->
+<!--        INNER JOIN jxb_weixin_user_role role ON role.id = role_user.role_id-->
+<!--        WHERE-->
+<!--        manager.available=1 and role_user.available=1 and role.available=1-->
+<!--        and manager.id = #{id}-->
+<!--    </select>-->
+
+<!--    <select id="countManagerAndRole" resultType="long" parameterType="com.joybo.weixin.dto.ManagerAndRoleQueryDTO">-->
+<!--        select count(*) from-->
+<!--        (-->
+<!--        SELECT-->
+<!--        manager.id,-->
+<!--        manager.password,-->
+<!--        manager.user_name,-->
+<!--        manager.source,-->
+<!--        manager.phone,-->
+<!--        manager.create_time,-->
+<!--        manager.update_time,-->
+<!--        manager.available,-->
+<!--        role.id role_id,role.role,role.description,role.available,role.resource_ids-->
+<!--        FROM-->
+<!--        jxb_weixin_user_manager  manager-->
+<!--        INNER JOIN jxb_weixin_user_role_user role_user ON manager.id = role_user.manager_id-->
+<!--        INNER JOIN jxb_weixin_user_role role ON role.id = role_user.role_id-->
+<!--        WHERE-->
+<!--        role_user.available=1 and role.available=1-->
+<!--        and manager.source = #{source}-->
+<!--        <if test="available != null">-->
+<!--            and manager.available= #{available}-->
+<!--        </if>-->
+<!--        <if test="userName != null and userName != ''">-->
+<!--            and manager.user_name like '%${userName}%'-->
+<!--        </if>-->
+<!--        <if test="phone != null and phone != ''">-->
+<!--            and manager.phone like '%${phone}%'-->
+<!--        </if>-->
+
+<!--        ) a-->
+<!--    </select>-->
+</mapper>

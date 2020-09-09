@@ -11,7 +11,7 @@ eureka:
     fetch-registry: true # 拉取eureka服务信息
   server:
     enable-self-preservation: false # 关闭自我保护
-    eviction-interval-timer-in-ms: 5000 # 每隔5秒钟，进行一次服务列表的清理
+    eviction-interval-timer-in-ms: 1000 # 每隔5秒钟，进行一次服务列表的清理
 
 zuul:
   prefix: /gateway # 路由路径前缀

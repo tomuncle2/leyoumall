@@ -35,6 +35,7 @@ public class SpecParam extends BasePojo implements Serializable  {
     private String name;
 
     /**是否数字类型规格 true:是 false:否*/
+    @Column(name = "numerics")
     private Boolean numeric;
 
     /**数字类型规格的单位*/

@@ -2,11 +2,12 @@ package com.leyou.service.impl;
 
 import com.leyou.dao.SpecGroupMapper;
 import com.leyou.pojo.SpecGroup;
-import com.leyou.pojo.SpecParam;
 import com.leyou.service.SpecGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -21,14 +22,18 @@ public class SpecGroupServiceImpl implements SpecGroupService {
     private SpecGroupMapper specGroupMapper;
 
     /**
-     * 获取分类下规格组
+     * cid获取分类下规格组
      * @date 17:35 2020/9/8
      * @param cid
      * @return java.util.List<com.leyou.pojo.SpecGroup>
      */
     @Override
     public List<SpecGroup> queryGroupsByCid(Long cid) {
-        return null;
+        Example example = new Example(SpecGroup.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("cid", cid);
+        criteria.andEqualTo("deleteMark", true);
+        return specGroupMapper.selectByExample(example);
     }
 
     /**
@@ -39,7 +44,9 @@ public class SpecGroupServiceImpl implements SpecGroupService {
      */
     @Override
     public boolean saveGroup(SpecGroup group) {
-        return false;
+        group.init();
+        int result = specGroupMapper.insertSelective(group);
+        return result > 0 ? true : false;
     }
 
     /**
@@ -50,7 +57,9 @@ public class SpecGroupServiceImpl implements SpecGroupService {
      */
     @Override
     public boolean updateGroup(SpecGroup group) {
-        return false;
+        group.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        int result = specGroupMapper.updateByPrimaryKeySelective(group);
+        return result > 0 ? true : false;
     }
 
     /**
@@ -61,20 +70,11 @@ public class SpecGroupServiceImpl implements SpecGroupService {
      */
     @Override
     public boolean deleteGroup(SpecGroup group) {
-        return false;
+        group.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        group.setDeleteMark(0);
+        int result = specGroupMapper.updateByPrimaryKeySelective(group);
+        return result > 0 ? true : false;
     }
 
-    /**
-     * gid查询规格参数
-     * @date 17:42 2020/9/8
-     * @param gid
-     * @param cid
-     * @param generic
-     * @param searching
-     * @return java.util.List<com.leyou.pojo.SpecParam>
-     */
-    @Override
-    public List<SpecParam> queryParams(Long gid, Long cid, Boolean generic, Boolean searching) {
-        return null;
-    }
+
 }
