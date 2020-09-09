@@ -76,7 +76,7 @@ public class GoodsServiceImpl implements GoodsService {
                             StringBuilder stringBuilder = new StringBuilder();
                             List<Category> categories = spuDto.getCategories();
                             for (int i = 0; i < categories.size(); i++) {
-                                stringBuilder.append(categories.get(i));
+                                stringBuilder.append(categories.get(i).getName());
                                 if (i != categories.size() -1) {
                                     stringBuilder.append("/");
                                 }
