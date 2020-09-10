@@ -161,4 +161,15 @@ public class BrandServiceImpl implements BrandService {
 
         return false;
     }
+
+    /**
+     * 分类id查询品牌列表（商品新增编辑用）
+     * @date 10:59 2020/9/10
+     * @param cid
+     * @return java.util.List<com.leyou.pojo.Brand>
+     */
+    @Override
+    public List<Brand> queryBrandsByCid(Long cid) {
+        return brandMapper.listBrandByCid(cid);
+    }
 }

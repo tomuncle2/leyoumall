@@ -73,7 +73,7 @@ public class BrandController {
     }
 
     /**
-     *
+     *查询品牌
      * @date 16:45 2020/9/5
      * @param id
      * @return com.leyou.common.result.Result
@@ -99,6 +99,12 @@ public class BrandController {
         }
     }
 
+    /**
+     * 删除品牌
+     * @date 10:57 2020/9/10
+     * @param bids
+     * @return org.springframework.http.ResponseEntity<java.util.List<com.leyou.pojo.Category>>
+     */
     @DeleteMapping("bid/{bid}")
     public ResponseEntity<List<Category>> deleteCategoryByBid(@PathVariable("bid")String bids) {
         String split = "-";
@@ -111,4 +117,16 @@ public class BrandController {
         }
         return ResponseEntity.ok().build();
     }
+
+    /**
+     * 分类查询品牌列表
+     * @date  2020/9/10
+     * @param cid
+     * @return org.springframework.http.ResponseEntity<java.util.List<com.leyou.pojo.Brand>>
+     */
+    @GetMapping("cid/{cid}")
+    public ResponseEntity<List<Brand>> queryBrandsByCid(@PathVariable("cid") Long cid) {
+        return ResponseEntity.ok(brandService.queryBrandsByCid(cid));
+    }
+
 }

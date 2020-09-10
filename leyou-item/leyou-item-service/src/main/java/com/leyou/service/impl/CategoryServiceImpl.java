@@ -6,8 +6,10 @@ import com.leyou.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -46,5 +48,56 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> queryCategoryByBid(Long bid) {
         return categoryMapper.queryCategoryByBid(bid);
+    }
+
+    /**
+     * 新增分类
+     * @date 14:05 2020/9/9
+     * @param category
+     * @return boolean
+     */
+    @Override
+    @Transactional
+    public boolean saveCategory(Category category) {
+        // 新增子节点
+        category.init();
+        int result = categoryMapper.insertSelective(category);
+        if (result < 1) {
+            return false;
+        }
+        // 更新父节点信息
+        Category categoryP = new Category();
+        categoryP.setId(category.getParentId());
+        categoryP.setIsParent(true);
+        category.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        int resultU = categoryMapper.updateByPrimaryKeySelective(category);
+        return resultU > 0 ? true : false;
+    }
+
+    /**
+     * 修改分类
+     * @date 14:05 2020/9/9
+     * @param category
+     * @return boolean
+     */
+    @Override
+    public boolean updateCategory(Category category) {
+        category.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        int result = categoryMapper.updateByPrimaryKeySelective(category);
+        return result > 0 ? true : false;
+    }
+
+    /**
+     * 删除分类
+     * @date 14:05 2020/9/9
+     * @param category
+     * @return boolean
+     */
+    @Override
+    public boolean deleteCategory(Category category) {
+        // 不是父节点 ，直接删除， 以及品牌-分类关联表信息
+
+        // 是父节点不允许删除，需要先删除子节点
+        return false;
     }
 }

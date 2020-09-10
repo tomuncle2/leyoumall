@@ -51,7 +51,7 @@ public class UploadServiceImpl implements UploadService {
         }
         // 保存到服务器
         try {
-            file.transferTo(new File("E:\\github-repository\\leyoumall\\leyou-upload\\src\\main\\resources\\static\\upload\\" + fileName));
+            file.transferTo(new File("D:\\upload\\images\\" + fileName));
             // nginx代理地址
             return "http://image.leyou.com/" + fileName;
         } catch (IOException e) {

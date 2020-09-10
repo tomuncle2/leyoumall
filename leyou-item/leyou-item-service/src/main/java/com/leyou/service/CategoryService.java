@@ -1,6 +1,7 @@
 package com.leyou.service;
 
 import com.leyou.pojo.Category;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,5 +29,27 @@ public interface CategoryService {
      */
     List<Category> queryCategoryByBid(Long bid);
 
+    /**
+     * 新增分类
+     * @date 14:05 2020/9/9
+     * @param category
+     * @return boolean
+     */
+    boolean saveCategory(Category category);
 
+    /**
+     * 修改分类
+     * @date 14:05 2020/9/9
+     * @param category
+     * @return boolean
+     */
+    boolean updateCategory(Category category);
+
+    /**
+     * 删除分类
+     * @date 14:05 2020/9/9
+     * @param category
+     * @return boolean
+     */
+    boolean deleteCategory(Category category);
 }
