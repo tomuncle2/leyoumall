@@ -3,6 +3,7 @@ package com.leyou.pojo;
 import com.leyou.common.pojo.BasePojo;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -26,6 +27,7 @@ public class SpuDetail  extends BasePojo implements Serializable {
     /**商品的全局规格属性*/
     private String genericSpec;
     /**包装清单*/
+    @Column(name = "packing_list")
     private String packingList;
     /**售后服务*/
     private String afterService;

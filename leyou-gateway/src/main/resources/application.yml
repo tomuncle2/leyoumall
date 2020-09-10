@@ -17,7 +17,7 @@ zuul:
   prefix: /gateway # 路由路径前缀
   routes:
     item-service: /item/**
-#    upload-service: /upload/**
+    upload-service: /upload/**
 #    item-service:
 #      path: /gateway/item/**
 #      serviceId: item-service

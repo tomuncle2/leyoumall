@@ -69,4 +69,12 @@ public interface BrandService {
      * @return boolean
      */
     boolean deleteCategoryByBid(Long bid);
+
+    /**
+     * 分类id查询品牌列表（商品新增编辑用）
+     * @date 10:59 2020/9/10
+     * @param cid
+     * @return java.util.List<com.leyou.pojo.Brand>
+     */
+    List<Brand> queryBrandsByCid(Long cid);
 }

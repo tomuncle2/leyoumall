@@ -36,7 +36,7 @@ public class Spu  extends BasePojo implements Serializable {
     /**是否上架*/
     private Boolean saleable;
     /**是否有效，逻辑删除用*/
-    private String valid;
+    private Boolean valid;
     /**最后修改时间*/
     private Timestamp lastUpdateTime;
 }
