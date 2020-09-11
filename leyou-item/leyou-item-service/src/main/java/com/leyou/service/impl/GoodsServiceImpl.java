@@ -276,4 +276,40 @@ public class GoodsServiceImpl implements GoodsService {
     public Sku querySkuById(Long id) {
         return this.skuMapper.selectByPrimaryKey(id);
     }
+
+    /**
+     * 上下架
+     * @date 10:43 2020/9/11
+     * @param id
+     * @param saleable
+     * @return boolean
+     */
+    @Override
+    public boolean spuSaleableSet(Long id, Boolean saleable) {
+        Spu spu = new Spu();
+        spu.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        spu.setId(id);
+        if (null != saleable) {
+            spu.setSaleable(saleable);
+        }
+        int resultU = spuMapper.updateByPrimaryKeySelective(spu);
+        return resultU > 0 ? true : false;
+    }
+
+    /**
+     * 删除spu
+     * @date 10:44 2020/9/11
+     * @param id
+     * @return boolean
+     */
+    @Override
+    public boolean spuDelete(Long id) {
+        Spu spu = new Spu();
+        spu.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        spu.setId(id);
+        spu.setValid(false);
+        spu.setDeleteMark(0);
+        int resultU = spuMapper.updateByPrimaryKeySelective(spu);
+        return resultU > 0 ? true : false;
+    }
 }

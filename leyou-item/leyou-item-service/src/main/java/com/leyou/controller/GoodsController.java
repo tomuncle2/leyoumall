@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -116,6 +117,36 @@ public class GoodsController {
     @GetMapping("sku/{id}")
     public ResponseEntity<Sku> querySkuById(@PathVariable("id")Long id){
         return ResponseEntity.ok(goodsService.querySkuById(id));
+    }
+
+
+    /**
+     * 上下架
+     * @date 10:54 2020/9/11
+     * @param id
+     * @param saleable
+     * @return org.springframework.http.ResponseEntity
+     */
+    @PutMapping("goods/saleable/{id}")
+    public ResponseEntity spuSaleableSet(@PathVariable("id") Long id, @RequestParam("saleable") Boolean saleable) {
+        if (goodsService.spuSaleableSet(id, saleable)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.METHOD_FAILURE).build();
+    }
+
+    /**
+     * 删除spu
+     * @date 10:54 2020/9/11
+     * @param id
+     * @return org.springframework.http.ResponseEntity
+     */
+    @DeleteMapping("goods/delete/{id}")
+    public ResponseEntity spuDelete(@PathVariable("id") Long id) {
+        if (goodsService.spuDelete(id)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.METHOD_FAILURE).build();
     }
 
 }
