@@ -72,4 +72,21 @@ public interface GoodsService {
      * @return com.leyou.pojo.Sku
      */
     Sku querySkuById(Long id);
+
+    /**
+     * 上下架
+     * @date 10:43 2020/9/11
+     * @param id
+     * @param saleable
+     * @return boolean
+     */
+     boolean spuSaleableSet(Long id, Boolean saleable);
+
+     /**
+      * 删除spu
+      * @date 10:44 2020/9/11
+      * @param id
+      * @return boolean
+      */
+     boolean spuDelete(Long id);
 }
