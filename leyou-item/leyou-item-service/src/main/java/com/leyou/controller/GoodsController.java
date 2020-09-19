@@ -95,16 +95,7 @@ public class GoodsController {
         return ResponseEntity.ok(goodsService.querySpuDetailBySpuId(spuId));
     }
 
-    /**
-     * 获取spu
-     * @date 17:50 2020/9/10
-     * @param id
-     * @return org.springframework.http.ResponseEntity<com.leyou.pojo.Spu>
-     */
-    @GetMapping("spu/{id}")
-    public ResponseEntity<Spu>  querySpuById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(goodsService.querySpuById(id));
-    }
+
 
     /**
      * 获取sku
@@ -145,6 +136,18 @@ public class GoodsController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(HttpStatus.METHOD_FAILURE).build();
+    }
+
+    /**********************************前台门户接口***************************************/
+    /**
+     * 获取spu
+     * @date 17:50 2020/9/10
+     * @param id
+     * @return org.springframework.http.ResponseEntity<com.leyou.pojo.Spu>
+     */
+    @GetMapping("spu/{id}")
+    public ResponseEntity<Spu>  querySpuById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(goodsService.querySpuById(id));
     }
 
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public interface BrandApi {
 
     @GetMapping("{id}")
-    public Brand queryBrandById(@PathVariable("id") Long id);
+     Brand queryBrandById(@PathVariable("id") Long id);
 
     /**
      * 根据品牌id集合，查询品牌信息
