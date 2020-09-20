@@ -8,7 +8,6 @@ import com.leyou.pojo.Spu;
 import com.leyou.pojo.SpuDetail;
 import com.leyou.request.SpuRequest;
 import com.leyou.service.GoodsService;
-import com.leyou.service.impl.GoodsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -97,16 +95,7 @@ public class GoodsController {
         return ResponseEntity.ok(goodsService.querySpuDetailBySpuId(spuId));
     }
 
-    /**
-     * 获取spu
-     * @date 17:50 2020/9/10
-     * @param id
-     * @return org.springframework.http.ResponseEntity<com.leyou.pojo.Spu>
-     */
-    @GetMapping("spu/{id}")
-    public ResponseEntity<Spu>  querySpuById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(goodsService.querySpuById(id));
-    }
+
 
     /**
      * 获取sku
@@ -147,6 +136,18 @@ public class GoodsController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(HttpStatus.METHOD_FAILURE).build();
+    }
+
+    /**********************************前台门户接口***************************************/
+    /**
+     * 获取spu
+     * @date 17:50 2020/9/10
+     * @param id
+     * @return org.springframework.http.ResponseEntity<com.leyou.pojo.Spu>
+     */
+    @GetMapping("spu/{id}")
+    public ResponseEntity<Spu>  querySpuById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(goodsService.querySpuById(id));
     }
 
 }

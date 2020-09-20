@@ -23,7 +23,6 @@ public class SearchController {
 
     /**
      * 搜索商品
-     *
      * @param request
      * @return
      */

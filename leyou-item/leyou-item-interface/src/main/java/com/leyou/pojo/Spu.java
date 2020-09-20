@@ -1,5 +1,6 @@
 package com.leyou.pojo;
 
+
 import com.leyou.common.pojo.BasePojo;
 import lombok.Data;
 
