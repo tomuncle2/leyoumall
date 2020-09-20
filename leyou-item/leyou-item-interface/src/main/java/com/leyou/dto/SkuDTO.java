@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @description: sku
  */
 @Data
-public class SkuDto extends Sku implements Serializable {
+public class SkuDTO extends Sku implements Serializable {
 
     /**库存*/
     private Integer stock;

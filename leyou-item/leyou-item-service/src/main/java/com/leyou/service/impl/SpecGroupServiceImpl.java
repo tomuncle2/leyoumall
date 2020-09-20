@@ -1,13 +1,19 @@
 package com.leyou.service.impl;
 
 import com.leyou.dao.SpecGroupMapper;
+import com.leyou.dao.SpecParamMapper;
+import com.leyou.dto.SpecGroupDTO;
 import com.leyou.pojo.SpecGroup;
+import com.leyou.pojo.SpecParam;
 import com.leyou.service.SpecGroupService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +26,9 @@ public class SpecGroupServiceImpl implements SpecGroupService {
 
     @Autowired
     private SpecGroupMapper specGroupMapper;
+
+    @Autowired
+    private SpecParamMapper specParamMapper;
 
     /**
      * cid获取分类下规格组
@@ -34,6 +43,38 @@ public class SpecGroupServiceImpl implements SpecGroupService {
         criteria.andEqualTo("cid", cid);
         criteria.andEqualTo("deleteMark", true);
         return specGroupMapper.selectByExample(example);
+    }
+
+    /**
+     * 获取规格参数组和参数 (商品详情页，商品规格)
+     * @param cid
+     * @return java.util.List<com.leyou.dto.SpecGroupDTO>
+     */
+    @Override
+    public List<SpecGroupDTO> queryGroupsAndParamsByCid(Long cid) {
+        Example example = new Example(SpecGroup.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("cid", cid);
+        criteria.andEqualTo("deleteMark", true);
+        List<SpecGroup> list = specGroupMapper.selectByExample(example);
+        if (CollectionUtils.isEmpty(list)) {
+            return new ArrayList<>();
+        }
+
+        List<SpecGroupDTO> resultList = new ArrayList<>();
+        list.stream().forEach(specGroup -> {
+            SpecGroupDTO specGroupDTO = new SpecGroupDTO();
+            BeanUtils.copyProperties(specGroup, specGroupDTO);
+            // 查询组下的参数
+            SpecParam specParam = new SpecParam();
+            specParam.setGroupId(specGroup.getId());
+            specParam.setDeleteMark(1);
+            List<SpecParam> specParamList = specParamMapper.select(specParam);
+            // 设置
+            specGroupDTO.setParams(specParamList);
+            resultList.add(specGroupDTO);
+        });
+        return resultList;
     }
 
     /**

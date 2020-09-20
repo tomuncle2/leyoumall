@@ -1,6 +1,6 @@
 package com.leyou.request;
 
-import com.leyou.dto.SkuDto;
+import com.leyou.dto.SkuDTO;
 import com.leyou.pojo.Spu;
 import com.leyou.pojo.SpuDetail;
 import lombok.Data;
@@ -20,5 +20,5 @@ public class SpuRequest extends Spu implements Serializable {
     private SpuDetail spuDetail;
 
     /**sku列表*/
-    private List<SkuDto> skus;
+    private List<SkuDTO> skus;
 }

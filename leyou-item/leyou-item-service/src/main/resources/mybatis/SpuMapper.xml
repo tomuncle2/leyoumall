@@ -8,7 +8,7 @@
 
 
     <!--查询用户角色-->
-    <resultMap type="com.leyou.dto.SpuDto" id="resourceMapSpuDto">
+    <resultMap type="com.leyou.dto.SpuDTO" id="resourceMapSpuDto">
         <id column="id" property="id"/>
         <result column="bname" property="bname"/>
         <collection property="categories" ofType="com.leyou.pojo.Category">

@@ -1,5 +1,6 @@
 package com.leyou.pojo;
 
+
 import com.leyou.common.pojo.BasePojo;
 import lombok.Data;
 
@@ -34,7 +35,7 @@ public class SpecParam extends BasePojo implements Serializable  {
     /**规格名*/
     private String name;
 
-    /**是否数字类型规格 true:是 false:否*/
+    /**是否数字类型规格 true:是 false:否  numeric和mysql关键字冲突，所以要修改名词*/
     @Column(name = "numerics")
     private Boolean numeric;
 

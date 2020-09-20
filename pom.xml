@@ -15,7 +15,7 @@
         <module>leyou-item</module>
         <module>leyou-common</module>
         <module>leyou-upload</module>
-        <module>leyou-goods-web</module>
+        <!--<module>leyou-goods-web</module>-->
     </modules>
 
 
@@ -41,7 +41,7 @@
         <org.projectlombok.lombok.version>1.18.12</org.projectlombok.lombok.version>
         <jpa.version>1.0</jpa.version>
         <org.apache.commons.commons-lang3.version>3.4</org.apache.commons.commons-lang3.version>
-
+        <feign.version>1.0</feign.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -101,6 +101,12 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>${org.apache.commons.commons-lang3.version}</version>
             </dependency>
+
+            <!--&lt;!&ndash;feign&ndash;&gt;-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.cloud</groupId>-->
+                <!--<artifactId>spring-cloud-starter-openfeign</artifactId>-->
+            <!--</dependency>-->
         </dependencies>
     </dependencyManagement>
 

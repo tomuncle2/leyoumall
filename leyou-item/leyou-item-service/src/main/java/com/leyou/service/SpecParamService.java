@@ -23,7 +23,7 @@ public interface SpecParamService {
      */
      List<SpecParam> queryParams(Long gid, Long cid, Boolean generic, Boolean searching);
 
-     List<SpecGroup> querySpecsByCid(Long cid);
+
 
      /**
       * 新增规格参数

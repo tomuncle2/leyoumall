@@ -13,7 +13,7 @@ import java.util.List;
  * @description:
  */
 @Data
-public class SpuDto implements Serializable {
+public class SpuDTO implements Serializable {
     /**spu id*/
     private Long id;
     /**商品分类名称*/

@@ -8,8 +8,8 @@ import com.leyou.dao.SkuMapper;
 import com.leyou.dao.SpuDetailMapper;
 import com.leyou.dao.SpuMapper;
 import com.leyou.dao.StockMapper;
-import com.leyou.dto.SkuDto;
-import com.leyou.dto.SpuDto;
+import com.leyou.dto.SkuDTO;
+import com.leyou.dto.SpuDTO;
 import com.leyou.pojo.Category;
 import com.leyou.pojo.Sku;
 import com.leyou.pojo.Spu;
@@ -73,12 +73,12 @@ public class GoodsServiceImpl implements GoodsService {
         List<SpuBo> listResult = new ArrayList<>();
         if (!CollectionUtils.isEmpty(list)) {
             // 分类品牌信息
-            List<SpuDto>  list1 = spuMapper.listSpuWithBrandAndCategory(list);
+            List<SpuDTO>  list1 = spuMapper.listSpuWithBrandAndCategory(list);
             for (Spu spu : list) {
                 SpuBo spuBo = new SpuBo();
                 BeanUtils.copyProperties(spu, spuBo);
 
-                for (SpuDto spuDto : list1) {
+                for (SpuDTO spuDto : list1) {
                     if (spu.getId().equals(spuDto.getId())) {
 
                         // 品牌信息
@@ -150,7 +150,7 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public boolean updateGoods(SpuRequest spuRequest) {
-        List<SkuDto> list = this.listSkuBySpuId(spuRequest.getId());
+        List<SkuDTO> list = this.listSkuBySpuId(spuRequest.getId());
         if (!CollectionUtils.isEmpty(list)) {
             List<Long> ids = list.stream().map(s ->s.getId()).collect(Collectors.toList());
             // 删除库存
@@ -169,7 +169,7 @@ public class GoodsServiceImpl implements GoodsService {
             }
         }
 
-        // 新增库存
+        // 新增库存 sku
         saveStockAndSku(spuRequest);
 
         // 修改spu
@@ -197,19 +197,19 @@ public class GoodsServiceImpl implements GoodsService {
      */
     private boolean saveStockAndSku(SpuRequest spuRequest) {
         //
-        List<SkuDto> skus = spuRequest.getSkus();
+        List<SkuDTO> skus = spuRequest.getSkus();
         // 最好写成批量新增的接口 循环插表不建议
-        skus.stream().forEach(skuDto -> {
+        skus.stream().forEach(skuDTO -> {
             // 新增sku
-            skuDto.init();
-            skuDto.setLastUpdateTime(skuDto.getCreateTime());
-            skuDto.setSpuId(spuRequest.getId());
-            int result1 = skuMapper.insertSelective(skuDto);
+            skuDTO.init();
+            skuDTO.setLastUpdateTime(skuDTO.getCreateTime());
+            skuDTO.setSpuId(spuRequest.getId());
+            int result1 = skuMapper.insertSelective(skuDTO);
             // 新增库存
             Stock stock = new Stock();
             stock.init();
-            stock.setSkuId(skuDto.getId());
-            stock.setStock(skuDto.getStock());
+            stock.setSkuId(skuDTO.getId());
+            stock.setStock(skuDTO.getStock());
             int result2 = stockMapper.insertSelective(stock);
         });
         return true;
@@ -222,18 +222,18 @@ public class GoodsServiceImpl implements GoodsService {
      * @return java.util.List<com.leyou.pojo.Sku>
      */
     @Override
-    public List<SkuDto> listSkuBySpuId(Long spuId) {
+    public List<SkuDTO> listSkuBySpuId(Long spuId) {
         Example example = new Example(Sku.class);
         example.createCriteria().andEqualTo("spuId", spuId);
         List<Sku> list = skuMapper.selectByExample(example);
-        List<SkuDto> listResult = new ArrayList<>();
+        List<SkuDTO> listResult = new ArrayList<>();
         if (!CollectionUtils.isEmpty(list)) {
             list.stream().forEach((sku)->{
                 // 查询库存
                 Example exampleStock = new Example(Stock.class);
                 exampleStock.createCriteria().andEqualTo("skuId", sku.getId());
                 Stock stock = stockMapper.selectOneByExample(exampleStock);
-                SkuDto skuDto = new SkuDto();
+                SkuDTO skuDto = new SkuDTO();
                 BeanUtils.copyProperties(sku, skuDto);
                 skuDto.setStock(stock.getStock());
                 listResult.add(skuDto);

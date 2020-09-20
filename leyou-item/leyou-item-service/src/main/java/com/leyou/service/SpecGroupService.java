@@ -1,5 +1,6 @@
 package com.leyou.service;
 
+import com.leyou.dto.SpecGroupDTO;
 import com.leyou.pojo.SpecGroup;
 
 import java.util.List;
@@ -17,6 +18,14 @@ public interface SpecGroupService {
      * @return java.util.List<com.leyou.pojo.SpecGroup>
      */
     List<SpecGroup> queryGroupsByCid(Long cid);
+
+    /**
+     * 获取规格参数组和参数
+     * @param cid
+     * @return java.util.List<com.leyou.dto.SpecGroupDTO>
+     */
+    List<SpecGroupDTO> queryGroupsAndParamsByCid(Long cid);
+
 
     /**
      * 新增规格组

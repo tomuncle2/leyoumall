@@ -58,4 +58,14 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.queryCategoryByBid(bid));
     }
 
+    /**
+     * 获取分类名称，有顺序
+     * @param ids
+     * @return
+     */
+    @GetMapping("names")
+    public ResponseEntity<List<String>> queryNamesByIds(@RequestParam("ids") List<Long> ids) {
+        return ResponseEntity.ok(categoryService.queryNamesByIds(ids));
+    }
+
 }

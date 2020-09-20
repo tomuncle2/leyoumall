@@ -1,5 +1,6 @@
 package com.leyou.controller;
 
+import com.leyou.dto.SpecGroupDTO;
 import com.leyou.pojo.SpecGroup;
 import com.leyou.service.SpecGroupService;
 import lombok.extern.slf4j.Slf4j;
@@ -86,4 +87,14 @@ public class SpecGroupController {
         return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).build();
     }
 
+    /**
+     * 获取规格参数组和参数
+     * @param cid
+     * @return org.springframework.http.ResponseEntity
+     */
+    @GetMapping("{cid}")
+    public ResponseEntity<List<SpecGroupDTO>> queryGroupsAndParamsByCid(@PathVariable("cid") Long cid) {
+        List<SpecGroupDTO> list = specGroupService.queryGroupsAndParamsByCid(cid);
+        return ResponseEntity.ok(list);
+    }
 }

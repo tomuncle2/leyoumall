@@ -2,7 +2,7 @@ package com.leyou.controller;
 
 import com.leyou.bo.SpuBo;
 import com.leyou.common.page.PageResult;
-import com.leyou.dto.SkuDto;
+import com.leyou.dto.SkuDTO;
 import com.leyou.pojo.Sku;
 import com.leyou.pojo.Spu;
 import com.leyou.pojo.SpuDetail;
@@ -77,10 +77,10 @@ public class GoodsController {
      * spuId获取sku列表
      * @date 17:50 2020/9/10
      * @param id
-     * @return org.springframework.http.ResponseEntity<java.util.List<com.leyou.dto.SkuDto>>
+     * @return org.springframework.http.ResponseEntity<java.util.List<com.leyou.dto.SkuDTO>>
      */
     @GetMapping("sku/list")
-    public ResponseEntity<List<SkuDto>> listSkuBySpuId(@RequestParam("id") Long id) {
+    public ResponseEntity<List<SkuDTO>> listSkuBySpuId(@RequestParam("id") Long id) {
         return ResponseEntity.ok(goodsService.listSkuBySpuId(id));
     }
 

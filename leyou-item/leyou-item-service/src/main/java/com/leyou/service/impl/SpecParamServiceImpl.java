@@ -54,10 +54,7 @@ public class SpecParamServiceImpl implements SpecParamService {
         return specParamMapper.selectByExample(example);
     }
 
-    @Override
-    public List<SpecGroup> querySpecsByCid(Long cid) {
-        return null;
-    }
+
 
     /**
      * 新增规格参数

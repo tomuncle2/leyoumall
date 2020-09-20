@@ -1,7 +1,6 @@
 package com.leyou.dao;
 
-import com.leyou.bo.SpuBo;
-import com.leyou.dto.SpuDto;
+import com.leyou.dto.SpuDTO;
 import com.leyou.pojo.Spu;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -21,7 +20,7 @@ public interface SpuMapper extends Mapper<Spu> {
      * 获取spu品牌和分类信息名称信息
      * @date 17:51 2020/9/9
      * @param list
-     * @return java.util.List<com.leyou.dto.SpuDto>
+     * @return java.util.List<com.leyou.dto.SpuDTO>
      */
-    List<SpuDto> listSpuWithBrandAndCategory(@Param("list") List<Spu> list);
+    List<SpuDTO> listSpuWithBrandAndCategory(@Param("list") List<Spu> list);
 }

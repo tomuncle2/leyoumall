@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@RequestMapping("/goods")
+@RequestMapping("/")
 public interface GoodsApi {
 
     /**
@@ -52,5 +52,5 @@ public interface GoodsApi {
     List<Sku> querySkusBySpuId(@RequestParam("id") Long id);
 
     @GetMapping("sku/{id}")
-    public ResponseEntity<Sku> querySkuById(@PathVariable("id") Long id);
+     ResponseEntity<Sku> querySkuById(@PathVariable("id") Long id);
 }

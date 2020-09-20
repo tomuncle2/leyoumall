@@ -52,4 +52,9 @@ public interface CategoryService {
      * @return boolean
      */
     boolean deleteCategory(Category category);
+
+    /**
+     * 查询分类名称
+     * */
+    List<String> queryNamesByIds(List<Long> ids);
 }

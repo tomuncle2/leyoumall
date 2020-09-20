@@ -2,7 +2,7 @@ package com.leyou.service;
 
 import com.leyou.bo.SpuBo;
 import com.leyou.common.page.PageResult;
-import com.leyou.dto.SkuDto;
+import com.leyou.dto.SkuDTO;
 import com.leyou.pojo.Sku;
 import com.leyou.pojo.Spu;
 import com.leyou.pojo.SpuDetail;
@@ -47,7 +47,7 @@ public interface GoodsService {
      * @param spuId
      * @return java.util.List<com.leyou.pojo.Sku>
      */
-    List<SkuDto> listSkuBySpuId(Long spuId);
+    List<SkuDTO> listSkuBySpuId(Long spuId);
 
     /**
      * spuId获取SpuDetail列表

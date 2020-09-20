@@ -7,9 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -99,5 +101,20 @@ public class CategoryServiceImpl implements CategoryService {
 
         // 是父节点不允许删除，需要先删除子节点
         return false;
+    }
+
+    /**
+     * 查询分类名称
+     * */
+    @Override
+    public List<String> queryNamesByIds(List<Long> ids) {
+        List<Category> list = this.categoryMapper.selectByIdList(ids);
+        List<String> resultList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(list)) {
+            list.stream().forEach((category)->{
+                resultList.add(category.getName());
+            });
+        }
+        return resultList;
     }
 }
