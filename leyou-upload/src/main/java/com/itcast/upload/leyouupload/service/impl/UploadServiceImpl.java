@@ -51,9 +51,9 @@ public class UploadServiceImpl implements UploadService {
         }
         // 保存到服务器
         try {
-            file.transferTo(new File("D:\\upload\\images\\" + fileName));
-            // nginx代理地址
-            return "http://image.leyou.com/" + fileName;
+            file.transferTo(new File("D:\\LeyouStaticResource\\upload\\" + fileName));
+            // nginx代理的图片资源地址（这里放本地，实际是放在专门的服务器上）
+            return "http://image.leyou.com/upload/" + fileName;
         } catch (IOException e) {
             e.printStackTrace();
         }

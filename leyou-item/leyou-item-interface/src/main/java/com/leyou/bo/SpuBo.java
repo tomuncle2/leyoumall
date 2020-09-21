@@ -3,6 +3,7 @@ package com.leyou.bo;
 import com.leyou.pojo.Spu;
 import lombok.Data;
 
+
 import java.io.Serializable;
 
 /**

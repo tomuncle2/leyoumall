@@ -5,6 +5,7 @@ import com.leyou.goods.feign.BrandClient;
 import com.leyou.goods.feign.CategoryClient;
 import com.leyou.goods.feign.GoodsClient;
 import com.leyou.goods.feign.SpecificationClient;
+
 import com.leyou.goods.service.GoodsService;
 import com.leyou.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;

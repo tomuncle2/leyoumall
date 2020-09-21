@@ -10,12 +10,18 @@
     <version>1.0-SNAPSHOT</version>
     <!--子工程-->
     <modules>
+        <!--注册中心-->
         <module>leyou-registry</module>
+        <!--网关-->
         <module>leyou-gateway</module>
+        <!--商品微服务-->
         <module>leyou-item</module>
+        <!--公共库抽取-->
         <module>leyou-common</module>
+        <!--文件上传微服务-->
         <module>leyou-upload</module>
-        <!--<module>leyou-goods-web</module>-->
+        <!--商品详情页微服务-->
+        <module>leyou-goods-web</module>
     </modules>
 
 
