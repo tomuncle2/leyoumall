@@ -3,6 +3,7 @@ package com.leyou.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.leyou.bo.SpuBo;
+import com.leyou.common.constant.RabbitMqConstant;
 import com.leyou.common.page.PageResult;
 import com.leyou.dao.SkuMapper;
 import com.leyou.dao.SpuDetailMapper;
@@ -10,11 +11,7 @@ import com.leyou.dao.SpuMapper;
 import com.leyou.dao.StockMapper;
 import com.leyou.dto.SkuDTO;
 import com.leyou.dto.SpuDTO;
-import com.leyou.pojo.Category;
-import com.leyou.pojo.Sku;
-import com.leyou.pojo.Spu;
-import com.leyou.pojo.SpuDetail;
-import com.leyou.pojo.Stock;
+import com.leyou.pojo.*;
 import com.leyou.request.SpuRequest;
 import com.leyou.service.GoodsService;
 import lombok.extern.slf4j.Slf4j;
@@ -147,7 +144,7 @@ public class GoodsServiceImpl implements GoodsService {
         boolean b = saveStockAndSku(spuRequest);
         if (b) {
             // 发送消息到消息队列 ，做商品详情页静态化
-            sendMessage("item-save", spuRequest.getId());
+            sendMessage(RabbitMqConstant.ITEM_TOPIC_KEY_CHANGE, spuRequest.getId());
             return true;
         } else {
             return false;
@@ -200,7 +197,7 @@ public class GoodsServiceImpl implements GoodsService {
         }
 
         // 发送消息到消息队列 ，做商品详情页静态化
-        sendMessage("item-update", spuRequest.getId());
+        sendMessage(RabbitMqConstant.ITEM_TOPIC_KEY_CHANGE, spuRequest.getId());
         return true;
     }
 
@@ -325,20 +322,24 @@ public class GoodsServiceImpl implements GoodsService {
         spu.setValid(false);
         spu.setDeleteMark(0);
         int resultU = spuMapper.updateByPrimaryKeySelective(spu);
-        return resultU > 0 ? true : false;
+        if( resultU > 0 ) {
+            sendMessage(RabbitMqConstant.ITEM_TOPIC_KEY_DELETE, id);
+        } else {
+            return false;
+        }
     }
 
     /**
      * 发送消息
      * @date 17:57 2020/9/22
-     * @param title
+     * @param key
      * @param id
      * @return void
      */
-    public void sendMessage(String title, Long id) {
+    public void sendMessage(String key, Long id) {
         // 发送消息到消息队列 ，做商品详情页静态化
         try {
-            amqpTemplate.convertAndSend(title, id);
+            amqpTemplate.convertAndSend(RabbitMqConstant.ITEM_EXCHANGE_TOPIC,key, id);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("[item-service]=== title  出现异常 {}", e.getMessage());
