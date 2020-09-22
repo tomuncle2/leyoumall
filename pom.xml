@@ -48,6 +48,7 @@
         <jpa.version>1.0</jpa.version>
         <org.apache.commons.commons-lang3.version>3.4</org.apache.commons.commons-lang3.version>
         <feign.version>1.0</feign.version>
+        <amqp.rabbitmq.version>2.0.10</amqp.rabbitmq.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -107,6 +108,18 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>${org.apache.commons.commons-lang3.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${org.apache.commons.commons-lang3.version}</version>
+            </dependency>
+
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-starter-amqp</artifactId>-->
+<!--                <version>${amqp.rabbitmq.version}</version>-->
+<!--            </dependency>-->
 
             <!--&lt;!&ndash;feign&ndash;&gt;-->
             <!--<dependency>-->

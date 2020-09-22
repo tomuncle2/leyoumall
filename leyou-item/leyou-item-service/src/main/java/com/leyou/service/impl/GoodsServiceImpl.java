@@ -17,7 +17,9 @@ import com.leyou.pojo.SpuDetail;
 import com.leyou.pojo.Stock;
 import com.leyou.request.SpuRequest;
 import com.leyou.service.GoodsService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,7 @@ import java.util.stream.Collectors;
  * @description: 商品serviceimpl
  */
 @Service
+@Slf4j
 public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
@@ -49,6 +52,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private StockMapper stockMapper;
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     /**
      * 后台查询商品列表
@@ -134,12 +140,18 @@ public class GoodsServiceImpl implements GoodsService {
         if (resultSpuDetail < 1) {
             return false;
         }
-        // 新增sku
 
-        // 新增库存
 
-        return (saveStockAndSku(spuRequest)) ? true : false;
 
+        // 新增sku 新增库存
+        boolean b = saveStockAndSku(spuRequest);
+        if (b) {
+            // 发送消息到消息队列 ，做商品详情页静态化
+            sendMessage("item-save", spuRequest.getId());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -186,6 +198,9 @@ public class GoodsServiceImpl implements GoodsService {
         if (resultSpuDetail < 1) {
             return false;
         }
+
+        // 发送消息到消息队列 ，做商品详情页静态化
+        sendMessage("item-update", spuRequest.getId());
         return true;
     }
 
@@ -311,5 +326,22 @@ public class GoodsServiceImpl implements GoodsService {
         spu.setDeleteMark(0);
         int resultU = spuMapper.updateByPrimaryKeySelective(spu);
         return resultU > 0 ? true : false;
+    }
+
+    /**
+     * 发送消息
+     * @date 17:57 2020/9/22
+     * @param title
+     * @param id
+     * @return void
+     */
+    public void sendMessage(String title, Long id) {
+        // 发送消息到消息队列 ，做商品详情页静态化
+        try {
+            amqpTemplate.convertAndSend(title, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("[item-service]=== title  出现异常 {}", e.getMessage());
+        }
     }
 }
