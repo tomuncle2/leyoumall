@@ -38,6 +38,9 @@ public class GoodsController {
     public String toItemDetail(Model model, @PathVariable("id") Long id) {
         //
         Map<String, Object> map = service.loadGoodsDetail(id);
+        if (null == map) {
+            return null;
+        }
         model.addAllAttributes(map);
 
         // 创建静态化页面 thymeleaf生成的html

@@ -64,6 +64,8 @@ public class GoodsServiceImpl implements GoodsService {
         Example example = new Example(Spu.class);
         example.orderBy("id").desc();
         Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("deleteMark", true);
+        criteria.andEqualTo("valid", true);
         if (null != saleable) {
             criteria.andEqualTo("saleable", saleable);
         }
@@ -144,7 +146,7 @@ public class GoodsServiceImpl implements GoodsService {
         boolean b = saveStockAndSku(spuRequest);
         if (b) {
             // 发送消息到消息队列 ，做商品详情页静态化
-            sendMessage(RabbitMqConstant.ITEM_TOPIC_KEY_CHANGE, spuRequest.getId());
+            sendMessage("item_change.save", spuRequest.getId());
             return true;
         } else {
             return false;
@@ -197,7 +199,7 @@ public class GoodsServiceImpl implements GoodsService {
         }
 
         // 发送消息到消息队列 ，做商品详情页静态化
-        sendMessage(RabbitMqConstant.ITEM_TOPIC_KEY_CHANGE, spuRequest.getId());
+        sendMessage("item_change.update", spuRequest.getId());
         return true;
     }
 
@@ -236,7 +238,9 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public List<SkuDTO> listSkuBySpuId(Long spuId) {
         Example example = new Example(Sku.class);
-        example.createCriteria().andEqualTo("spuId", spuId);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("spuId", spuId);
+        criteria.andEqualTo("deleteMark", true);
         List<Sku> list = skuMapper.selectByExample(example);
         List<SkuDTO> listResult = new ArrayList<>();
         if (!CollectionUtils.isEmpty(list)) {
@@ -275,7 +279,12 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public Spu querySpuById(Long id) {
-        return this.spuMapper.selectByPrimaryKey(id);
+        Spu spu = new Spu();
+        spu.setId(id);
+        spu.setDeleteMark(1);
+        spu.setValid(true);
+        spu.setSaleable(true);
+        return this.spuMapper.selectOne(spu);
     }
 
     /**
@@ -324,6 +333,7 @@ public class GoodsServiceImpl implements GoodsService {
         int resultU = spuMapper.updateByPrimaryKeySelective(spu);
         if( resultU > 0 ) {
             sendMessage(RabbitMqConstant.ITEM_TOPIC_KEY_DELETE, id);
+            return true;
         } else {
             return false;
         }

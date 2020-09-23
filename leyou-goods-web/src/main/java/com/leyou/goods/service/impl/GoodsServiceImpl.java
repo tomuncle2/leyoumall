@@ -44,6 +44,9 @@ public class GoodsServiceImpl implements GoodsService {
         Map<String, Object> resultMap = new TreeMap<>();
         // spu
         Spu spu = goodsClient.querySpuById(spuId).getBody();
+        if (null == spu) {
+            return new HashMap<>();
+        }
 
         List<Sku> skus = goodsClient.querySkusBySpuId(spuId);
 

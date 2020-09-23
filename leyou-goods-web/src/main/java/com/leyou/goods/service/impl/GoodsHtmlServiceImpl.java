@@ -87,7 +87,7 @@ public class GoodsHtmlServiceImpl implements GoodsHtmlService {
             writer = new PrintWriter(file);
 
             // 执行页面静态化方法
-            templateEngine.process("items", context, writer);
+            templateEngine.process("item", context, writer);
         } catch (Exception e) {
             log.error("页面静态化出错：{}，"+ e, spuId);
         } finally {
@@ -120,6 +120,17 @@ public class GoodsHtmlServiceImpl implements GoodsHtmlService {
     @Override
     public void deleteHtml(Long id) {
         File file = new File("D:\\development\\nginx-1.14.0\\html\\item\\" + id + ".html");
-        file.deleteOnExit();
+        try {
+            if (file.delete()) {
+                System.out.println(file.getName() + "is deleted");
+            } else {
+                System.out.println("Delete failed.");
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured");
+            e.printStackTrace();
+        }
+
+        log.info("删除了详情页" + + id + ".html");
     }
 }
