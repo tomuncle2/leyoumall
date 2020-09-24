@@ -31,6 +31,10 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
     </dependencies>
 
     <!--坑点：最终原因，其实就是没有依赖。。。原因就是spring-boot-maven-plugin

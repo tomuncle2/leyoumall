@@ -20,9 +20,7 @@
     </properties>
 
 
-
     <dependencies>
-
         <dependency>
             <groupId>com.leyou.auth</groupId>
             <artifactId>leyou-auth-common</artifactId>

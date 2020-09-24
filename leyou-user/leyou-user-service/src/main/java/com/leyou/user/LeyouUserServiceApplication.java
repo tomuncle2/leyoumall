@@ -10,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @date: 18:20 2020/8/15
  * @description:
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.leyou.*")
 @EnableEurekaClient
 @EnableFeignClients
 //@MapperScan(basePackages = "com.leyou.user.dao")
