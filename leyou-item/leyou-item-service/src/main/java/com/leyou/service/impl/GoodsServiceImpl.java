@@ -324,6 +324,7 @@ public class GoodsServiceImpl implements GoodsService {
         int resultU = spuMapper.updateByPrimaryKeySelective(spu);
         if( resultU > 0 ) {
             sendMessage(RabbitMqConstant.ITEM_TOPIC_KEY_DELETE, id);
+            return true;
         } else {
             return false;
         }
