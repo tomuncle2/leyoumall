@@ -22,6 +22,10 @@
         <module>leyou-upload</module>
         <!--商品详情页微服务-->
         <module>leyou-goods-web</module>
+        <!--短信服务-->
+        <module>sms-service</module>
+        <!--用户服务-->
+        <module>user-service</module>
     </modules>
 
 
