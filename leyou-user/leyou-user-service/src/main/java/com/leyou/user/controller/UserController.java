@@ -4,6 +4,7 @@ import com.leyou.user.pojo.User;
 import com.leyou.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,11 +31,12 @@ public class UserController {
      * @return
      */
     @PostMapping("code")
-    public ResponseEntity sendMessage(@RequestParam("phone") String phone) {
+    public ResponseEntity sendMessage(String phone) {
         if (userService.sendMessage(phone)) {
             return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.METHOD_FAILURE).build();
         }
-        return ResponseEntity.badRequest().build();
     }
 
     /**
@@ -48,8 +50,9 @@ public class UserController {
     public ResponseEntity checkRegisterData(@PathVariable("data") String data, @PathVariable("type")Integer type) {
         if (userService.checkRegisterData(data, type)) {
             return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.METHOD_FAILURE).build();
         }
-        return ResponseEntity.badRequest().build();
     }
 
     /**
@@ -63,25 +66,23 @@ public class UserController {
     public ResponseEntity register(@Validated User user, @RequestParam("code")String code) {
         if (userService.register(user, code)) {
             return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.METHOD_FAILURE).build();
         }
-        return ResponseEntity.badRequest().build();
     }
 
     /**
      * 根据用户名和密码查询用户
+     * @date 9:47 2020/9/25
      * @param username
      * @param password
      * @param type
-     * @return
+     * @return org.springframework.http.ResponseEntity<com.leyou.user.pojo.User>
      */
     @GetMapping("query")
     public ResponseEntity<User> queryUser(@RequestParam("username") String username,
                                           @RequestParam("password") String password,
                                           Integer type) {
-        User user = userService.checkUser(type, username, password);
-        if (null != user) {
-            return ResponseEntity.ok(user);
-        }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(userService.queryUser(type,username, password));
     }
 }

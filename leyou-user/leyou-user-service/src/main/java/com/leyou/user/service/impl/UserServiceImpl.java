@@ -14,6 +14,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * @author: 蔡迪
@@ -49,7 +51,12 @@ public class UserServiceImpl implements UserService {
         // 发送短信
 
         // 存入redis
-        boolean b = redisUtils.set("code-" + phone, code);
+        boolean b = redisUtils.set("code-" + phone, code, 5, TimeUnit.MINUTES);
+        if (b) {
+            log.info("发送短信成功。phone：{}， code：{}", phone, code);
+        } else {
+            log.info("发送短信失败。phone：{}， code：{}", phone, code);
+        }
         return b;
     }
 
@@ -72,7 +79,7 @@ public class UserServiceImpl implements UserService {
             case 2: // 检测手机号;
             user.setPhone(data);
             break;
-            default: return null;
+            default: return false;
         }
         int count = userMapper.selectCount(user);
         return count == 0 ;
@@ -110,16 +117,16 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 校验用户名和密码查询用户
+     * 根据用户名和密码查询用户
+     * @param type
      * @param username
      * @param password
-     * @param type
      * @return com.leyou.user.pojo.User
      * @date 17:03 2020/9/24
      */
     @Override
-    public User checkUser(Integer type, String username, String password) {
-        // 用户是否存在，手机号或者邮箱
+    public User queryUser(Integer type, String username, String password) {
+        // 校验用户名是否存在 phone username email...
         Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("deleteMark", true);
@@ -128,16 +135,15 @@ public class UserServiceImpl implements UserService {
         criteriaUsername.orEqualTo("username", username);
         criteriaUsername.orEqualTo("phone", username);
 
-        example.and(criteriaUsername);
-
         User user = userMapper.selectOneByExample(example);
-        if (user != null) {
-            // 校验密码
-            boolean b = StringUtils.equals(user.getPassword(), CodecUtils.md5Hex(user.getSalt(), password));
-            if (!b) {
-                return null;
+
+        if (null != user) {
+           boolean b = StringUtils.equals(user.getPassword(), CodecUtils.md5Hex(password, user.getSalt()));
+            if (b) {
+                return user;
             }
         }
-        return user;
+
+        return null;
     }
 }

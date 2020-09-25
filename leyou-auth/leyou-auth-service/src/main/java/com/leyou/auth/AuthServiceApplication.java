@@ -1,8 +1,10 @@
 package com.leyou.auth;
 
+import com.leyou.auth.config.JwtConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @author: 蔡迪
@@ -10,7 +12,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  * @description:
  */
 @SpringBootApplication
-@EnableEurekaClient
+@EnableDiscoveryClient
+@EnableConfigurationProperties(value = {JwtConfig.class})
 public class AuthServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(AuthServiceApplication.class, args);
