@@ -22,6 +22,14 @@
         <module>leyou-upload</module>
         <!--商品详情页微服务-->
         <module>leyou-goods-web</module>
+        <!--短信服务-->
+        <module>sms-service</module>
+        <!--订单服务-->
+        <module>order-service</module>
+        <!--用户服务-->
+        <module>leyou-user</module>
+        <module>leyou-auth</module>
+        <module>leyou-cart</module>
     </modules>
 
 
@@ -50,6 +58,8 @@
         <feign.version>1.0</feign.version>
         <amqp.rabbitmq.version>2.0.10</amqp.rabbitmq.version>
     </properties>
+
+    <!--版本管理-->
     <dependencyManagement>
         <dependencies>
             <!-- springCloud -->
