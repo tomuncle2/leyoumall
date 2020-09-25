@@ -3,8 +3,6 @@ server:
 spring:
   application:
     name: auth-service
-  thymeleaf:
-    cache: false
 #  rabbitmq:
 #    host: 192.168.25.110
 #    username: leyou
@@ -22,9 +20,9 @@ leyou:
     # 生成公匙和私匙需要的密匙
     secret: hiofsdjhfodsfsd45454356JOJ@@#
     # 公匙地址
-    publicKeyPath: fdfdfd
+    pubKeyPath: D:\development\leyou-code\rsa.pub
     # 私匙地址
-    priKeyPath: dsdsdsds
+    priKeyPath: D:\development\leyou-code\rsa.pri
     # 过期时间,单位分钟
     expire: 30
     # cookie的key

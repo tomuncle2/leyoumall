@@ -17,7 +17,29 @@ zuul:
   prefix: /gateway # 路由路径前缀
   routes:
     item-service: /item/**
+    auth-service: /auth/**
+    user-service: /user/**
+
 #    upload-service: /upload/**
 #    item-service:
 #      path: /gateway/item/**
 #      serviceId: item-service
+
+
+leyou:
+  jwt:
+    # 公匙地址
+    pubKeyPath: D:\development\leyou-code\rsa.pub
+    # cookie的key
+    cookieName: LY_TOKEN
+    
+  # 自定义白名单
+  filter:
+    allowPaths:
+      # 登录认证
+      - /gateway/auth
+      - /gateway/search
+      - /gateway/user/register
+      - /gateway/user/check
+      - /gateway/user/code
+      - /gateway/item

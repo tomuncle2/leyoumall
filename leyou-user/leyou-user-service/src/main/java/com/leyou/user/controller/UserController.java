@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 16:28 2020/9/24
  * @description:
  */
-@RestController
+@Controller
 @Slf4j
 public class UserController {
 
@@ -30,7 +31,7 @@ public class UserController {
      * @param phone
      * @return
      */
-    @PostMapping("code")
+    @PostMapping("send")
     public ResponseEntity sendMessage(String phone) {
         if (userService.sendMessage(phone)) {
             return ResponseEntity.ok().build();
@@ -48,11 +49,11 @@ public class UserController {
      */
     @GetMapping("check/{data}/{type}")
     public ResponseEntity checkRegisterData(@PathVariable("data") String data, @PathVariable("type")Integer type) {
-        if (userService.checkRegisterData(data, type)) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.METHOD_FAILURE).build();
+        Boolean boo = userService.checkRegisterData(data, type);
+        if (boo == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+        return ResponseEntity.ok(boo);
     }
 
     /**
@@ -77,7 +78,7 @@ public class UserController {
      * @param username
      * @param password
      * @param type
-     * @return org.springframework.http.ResponseEntity<com.leyou.user.pojo.User>
+     * @return org.springframework.http.ResponseEntity<User>
      */
     @GetMapping("query")
     public ResponseEntity<User> queryUser(@RequestParam("username") String username,

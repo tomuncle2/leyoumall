@@ -13,9 +13,9 @@ import java.security.PublicKey;
 
 public class JwtTest {
 
-    private static final String pubKeyPath = "D:\\development\\code-leyou\\rsa.pub";
+    private static final String pubKeyPath = "D:\\development\\code-leyou";
 
-    private static final String priKeyPath = "D:\\development\\code-leyou\\rsa.pri";
+    private static final String priKeyPath = "D:\\development\\code-leyou";
 
     private static final File pubKeyPathFile = new File(pubKeyPath);
 

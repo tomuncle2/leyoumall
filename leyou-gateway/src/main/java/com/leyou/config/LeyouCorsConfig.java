@@ -16,7 +16,7 @@ public class LeyouCorsConfig {
         config.addAllowedOrigin("http://manager.leyou.com");
         config.addAllowedOrigin("http://www.leyou.com");
         //config.addAllowedOrigin("*");
-        //2) 是否发送Cookie信息
+        //2) 是否允许发送Cookie信息
         config.setAllowCredentials(true);
         //3) 允许的请求方式
         config.addAllowedMethod("OPTIONS");

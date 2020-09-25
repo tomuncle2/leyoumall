@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
             case 2: // 检测手机号;
             user.setPhone(data);
             break;
-            default: return false;
+            default: return null;
         }
         int count = userMapper.selectCount(user);
         return count == 0 ;
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
      * @param type
      * @param username
      * @param password
-     * @return com.leyou.user.pojo.User
+     * @return User
      * @date 17:03 2020/9/24
      */
     @Override

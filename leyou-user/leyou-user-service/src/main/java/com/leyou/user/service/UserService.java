@@ -45,7 +45,7 @@ public interface UserService {
      * @param type
      * @param username
      * @param password
-     * @return com.leyou.user.pojo.User
+     * @return User
      * @date 17:03 2020/9/24
      */
     User queryUser(Integer type, String username, String password);
