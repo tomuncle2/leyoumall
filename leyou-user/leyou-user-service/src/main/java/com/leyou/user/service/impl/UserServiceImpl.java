@@ -12,6 +12,9 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
+
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -48,7 +51,12 @@ public class UserServiceImpl implements UserService {
         // 发送短信
 
         // 存入redis
-        boolean b = redisUtils.set("code-" + phone, code);
+        boolean b = redisUtils.set("code-" + phone, code, 5, TimeUnit.MINUTES);
+        if (b) {
+            log.info("发送短信成功。phone：{}， code：{}", phone, code);
+        } else {
+            log.info("发送短信失败。phone：{}， code：{}", phone, code);
+        }
         return b;
     }
 
@@ -71,7 +79,7 @@ public class UserServiceImpl implements UserService {
             case 2: // 检测手机号;
             user.setPhone(data);
             break;
-            default: return null;
+            default: return false;
         }
         int count = userMapper.selectCount(user);
         return count == 0 ;
@@ -110,14 +118,32 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 根据用户名和密码查询用户
-     *
+     * @param type
      * @param username
      * @param password
      * @return com.leyou.user.pojo.User
      * @date 17:03 2020/9/24
      */
     @Override
-    public User queryUser(String username, String password) {
+    public User queryUser(Integer type, String username, String password) {
+        // 校验用户名是否存在 phone username email...
+        Example example = new Example(User.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("deleteMark", true);
+
+        Example.Criteria criteriaUsername = example.createCriteria();
+        criteriaUsername.orEqualTo("username", username);
+        criteriaUsername.orEqualTo("phone", username);
+
+        User user = userMapper.selectOneByExample(example);
+
+        if (null != user) {
+           boolean b = StringUtils.equals(user.getPassword(), CodecUtils.md5Hex(password, user.getSalt()));
+            if (b) {
+                return user;
+            }
+        }
+
         return null;
     }
 }

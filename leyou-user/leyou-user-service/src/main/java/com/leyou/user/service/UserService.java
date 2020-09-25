@@ -1,7 +1,7 @@
 package com.leyou.user.service;
 
 import com.leyou.user.pojo.User;
-import org.springframework.http.ResponseEntity;
+
 
 /**
  * @author: 蔡迪
@@ -42,11 +42,11 @@ public interface UserService {
 
     /**
      * 根据用户名和密码查询用户
-     *
+     * @param type
      * @param username
      * @param password
      * @return com.leyou.user.pojo.User
      * @date 17:03 2020/9/24
      */
-    User queryUser(String username, String password);
+    User queryUser(Integer type, String username, String password);
 }

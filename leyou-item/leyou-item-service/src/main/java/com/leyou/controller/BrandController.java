@@ -1,8 +1,6 @@
 package com.leyou.controller;
 
-import com.leyou.common.enums.ResultCodeEnum;
 import com.leyou.common.page.PageResult;
-import com.leyou.common.result.Result;
 import com.leyou.dto.BrandRequest;
 import com.leyou.pojo.Brand;
 import com.leyou.pojo.Category;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.Arrays;
 import java.util.List;
 
