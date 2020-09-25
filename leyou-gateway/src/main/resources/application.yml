@@ -41,5 +41,5 @@ leyou:
       - /gateway/search
       - /gateway/user/register
       - /gateway/user/check
-      - /gateway/user/code
+      - /gateway/user/send
       - /gateway/item
