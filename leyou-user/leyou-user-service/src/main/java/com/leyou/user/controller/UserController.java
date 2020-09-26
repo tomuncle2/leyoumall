@@ -63,13 +63,13 @@ public class UserController {
      * @param code
      * @return org.springframework.http.ResponseEntity
      */
-    @GetMapping("register")
+    @PostMapping("register")
     public ResponseEntity register(@Validated User user, @RequestParam("code")String code) {
-        if (userService.register(user, code)) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.METHOD_FAILURE).build();
+        Boolean boo = userService.register(user, code);
+        if (boo == null || !boo) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     /**
@@ -81,9 +81,15 @@ public class UserController {
      * @return org.springframework.http.ResponseEntity<User>
      */
     @GetMapping("query")
-    public ResponseEntity<User> queryUser(@RequestParam("username") String username,
-                                          @RequestParam("password") String password,
-                                          Integer type) {
-        return ResponseEntity.ok(userService.queryUser(type,username, password));
+    public ResponseEntity<User> queryUser(
+            @RequestParam(value = "type", required = false) Integer type,
+            @RequestParam("username") String username,
+            @RequestParam("password") String password
+    ) {
+        User user = userService.queryUser(type, username, password);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(user);
     }
 }

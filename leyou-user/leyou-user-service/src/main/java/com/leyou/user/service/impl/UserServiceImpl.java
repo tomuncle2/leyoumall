@@ -95,15 +95,21 @@ public class UserServiceImpl implements UserService {
      * @date 17:03 2020/9/24
      */
     @Override
-    public boolean register(User user, String code) {
+    public Boolean register(User user, String code) {
         // 校验验证码
         Object cacheCode = redisUtils.get("code-" + user.getPhone());
-        if (null != cacheCode || StringUtils.equals((String)cacheCode, code)) {
+        if (null == cacheCode || !StringUtils.equals((String)cacheCode, code)) {
+            return false;
+        }
+        // 再查询一下用户名
+        Boolean checkUserName = checkRegisterData(user.getUsername(), 1);
+        if (null ==checkUserName || false == checkUserName.booleanValue()) {
             return false;
         }
         // 生成盐
         String salt = CodecUtils.generateSalt();
        // 对密码加密
+        user.setSalt(salt);
         user.setPassword(CodecUtils.md5Hex(user.getPassword(), salt));
         user.init();
 
@@ -134,7 +140,7 @@ public class UserServiceImpl implements UserService {
         Example.Criteria criteriaUsername = example.createCriteria();
         criteriaUsername.orEqualTo("username", username);
         criteriaUsername.orEqualTo("phone", username);
-
+        example.and(criteriaUsername);
         User user = userMapper.selectOneByExample(example);
 
         if (null != user) {

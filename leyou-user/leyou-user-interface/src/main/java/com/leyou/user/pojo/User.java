@@ -34,7 +34,7 @@ public class User extends BasePojo {
     @Pattern(regexp = "^1[35678]\\d{9}$", message = "手机号格式不正确")
     private String phone;
 
-    private Date created;
+//    private Date created;
 
     /**序列化的时候隐藏*/
     @JsonIgnore

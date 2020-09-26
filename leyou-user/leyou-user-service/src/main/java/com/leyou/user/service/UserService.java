@@ -38,7 +38,7 @@ public interface UserService {
      * @return org.springframework.http.ResponseEntity
      * @date 17:03 2020/9/24
      */
-    boolean register(User user, String code);
+    Boolean register(User user, String code);
 
     /**
      * 根据用户名和密码查询用户

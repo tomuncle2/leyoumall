@@ -33,7 +33,7 @@ public class AuthLoginServiceImpl implements AuthLoginService {
     @Override
     public String authentication(String username, String password) {
 
-        User user  = userClient.queryUser( username, password,null).getBody();
+        User user  = userClient.queryUser(null, username, password);
         if (null != user) {
             try {
                 String token = JwtUtils.generateToken(new UserInfoDTO(user.getId(), user.getUsername()), jwtConfig.getPrivateKey(),jwtConfig.getExpire());

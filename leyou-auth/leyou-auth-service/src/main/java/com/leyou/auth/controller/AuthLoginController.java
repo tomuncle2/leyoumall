@@ -56,7 +56,7 @@ public class AuthLoginController {
     }
 
     /**
-     * 获取用户信息
+     * 解析用户token,并刷新
      * @param token
      * @param request
      * @return
@@ -64,11 +64,16 @@ public class AuthLoginController {
     @GetMapping("verify")
     public ResponseEntity<UserInfoDTO> verify(
             @CookieValue(value ="LY_TOKEN", defaultValue = "Atta") String token,
-            HttpServletRequest request) {
+            HttpServletRequest request,
+            HttpServletResponse response) {
 
         // 校验token
         try {
             UserInfoDTO userInfoDTO = JwtUtils.getInfoFromToken(token, prop.getPublicKey());
+            // 解析成功要重新刷新token
+            token = JwtUtils.generateToken(userInfoDTO, this.prop.getPrivateKey(), this.prop.getExpire());
+            // 更新cookie中的token
+            CookieUtils.setCookie(request, response, this.prop.getCookieName(), token, this.prop.getCookieMaxAge());
             return ResponseEntity.ok(userInfoDTO);
         } catch (Exception e) {
             e.printStackTrace();
