@@ -30,6 +30,8 @@
         <module>leyou-user</module>
         <module>leyou-auth</module>
         <module>leyou-cart</module>
+
+        <module>leyou-search</module>
     </modules>
 
 

@@ -27,5 +27,5 @@ leyou:
     expire: 30
     # cookie的key
     cookieName: LY_TOKEN
-    # cookie过期时间
-    cookieMaxAge: 30
+    # cookie过期时间 秒
+    cookieMaxAge: 1800

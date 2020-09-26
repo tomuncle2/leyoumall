@@ -53,7 +53,7 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
-        <!--商品微服务-->
+        <!--common微服务-->
         <dependency>
             <groupId>com.leyou.common</groupId>
             <artifactId>leyou-common</artifactId>
@@ -61,14 +61,16 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.leyou.item</groupId>
             <artifactId>leyou-item-interface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
 
 
         <!--rabbitmq-->

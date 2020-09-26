@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Date;
 
 public class JwtUtils {
     /**
@@ -25,7 +26,8 @@ public class JwtUtils {
         return Jwts.builder()
                 .claim(JwtConstans.JWT_KEY_ID, userInfo.getId())
                 .claim(JwtConstans.JWT_KEY_USER_NAME, userInfo.getUsername())
-                .setExpiration(DateTime.now().plusMinutes(expireMinutes).toDate())
+                //.setExpiration(DateTime.now().plusHours(expireMinutes).toDate())
+                .setExpiration(new Date(System.currentTimeMillis() + expireMinutes * 60 * 1000))
                 .signWith(SignatureAlgorithm.RS256, privateKey)
                 .compact();
     }

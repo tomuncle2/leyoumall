@@ -19,6 +19,8 @@ zuul:
     item-service: /item/**
     auth-service: /auth/**
     user-service: /user/**
+    search-service: /search/**
+#    car-service: /car/**
   # 携带转发前的头信息
   add-host-header: true
   # zuul过滤器敏感头设置为空
