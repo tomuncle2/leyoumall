@@ -10,6 +10,15 @@ spring:
 #    username: leyou
 #    password: leyou
 #    virtual-host: /leyou
+
+leyou:
+  jwt:
+    # 公匙地址
+    pubKeyPath: D:\development\leyou-code\rsa.pub
+    # cookie的key
+    cookieName: LY_TOKEN
+
+
 eureka:
   client:
     service-url:
