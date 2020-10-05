@@ -22,6 +22,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>RELEASE</version>
         </dependency>
         <!-- thymeleaf网页解析 -->
         <dependency>

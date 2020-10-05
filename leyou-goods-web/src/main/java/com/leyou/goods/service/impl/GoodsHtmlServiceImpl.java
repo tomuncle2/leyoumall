@@ -38,6 +38,7 @@ public class GoodsHtmlServiceImpl implements GoodsHtmlService {
     @Override
     public void createHtml(Map<String, Object> spuMap) {
         Spu spu = (Spu)spuMap.get("spu");
+        Long spuId = spu.getId();
         PrintWriter writer = null;
         try {
             // 获取页面数据
@@ -55,7 +56,7 @@ public class GoodsHtmlServiceImpl implements GoodsHtmlService {
             // 执行页面静态化方法
             templateEngine.process("item", context, writer);
         } catch (Exception e) {
-            log.error("页面静态化出错：{}，"+ e, spu.getId());
+            log.error("页面静态化出错：{}，"+ e, spuId);
         } finally {
             if (writer != null) {
                 writer.close();
