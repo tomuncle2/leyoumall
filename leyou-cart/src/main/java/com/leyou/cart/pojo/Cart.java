@@ -1,7 +1,6 @@
 package com.leyou.cart.pojo;
 
 import lombok.Data;
-
 import java.io.Serializable;
 
 /**

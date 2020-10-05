@@ -32,6 +32,8 @@
         <module>leyou-cart</module>
 
         <module>leyou-search</module>
+        <!--订单服务-->
+        <module>leyou-order</module>
     </modules>
 
 

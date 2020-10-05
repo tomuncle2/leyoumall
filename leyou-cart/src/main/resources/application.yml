@@ -1,10 +1,8 @@
 server:
-  port: 8090
+  port: 7911
 spring:
   application:
-    name: goods-web
-  thymeleaf:
-    cache: false
+    name: cart-service
 #  rabbitmq:
 #    host: 192.168.25.110
 #    username: leyou

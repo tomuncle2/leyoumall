@@ -20,7 +20,9 @@ zuul:
     auth-service: /auth/**
     user-service: /user/**
     search-service: /search/**
-#    car-service: /car/**
+    cart-service: /cart/**
+    # 订单微服务
+    order-service: /**
   # 携带转发前的头信息
   add-host-header: true
   # zuul过滤器敏感头设置为空

@@ -53,7 +53,7 @@ public class CartServiceImpl implements CartService  {
         // 获取hash操作对象
         BoundHashOperations<String, Object, Object> boundHashOps = redisTemplate.boundHashOps(key);
 
-        boolean isExist = boundHashOps.hasKey(cart.getSkuId());
+        boolean isExist = boundHashOps.hasKey(String.valueOf(cart.getSkuId()));
         if (!isExist) {
             // 新增 item 查询spu
             Sku sku = goodsClient.querySkuById(cart.getSkuId()).getBody();
@@ -92,13 +92,13 @@ public class CartServiceImpl implements CartService  {
         // 获取hash操作对象
         BoundHashOperations<String, Object, Object> boundHashOps = redisTemplate.boundHashOps(key);
 
-        boolean isExist = boundHashOps.hasKey(cart.getSkuId());
+        boolean isExist = boundHashOps.hasKey(String.valueOf(cart.getSkuId()));
         if (!isExist) {
             // 新增 item 查询spu
             return false;
         } else {
             // 更新
-            String json = (String)boundHashOps.get(cart.getSkuId());
+            String json = (String)boundHashOps.get(String.valueOf(cart.getSkuId()));
             Cart alreadyExistCart = JSON.parseObject(json, Cart.class);
             alreadyExistCart.setNum(cart.getNum() );
             cart = alreadyExistCart;
@@ -123,7 +123,7 @@ public class CartServiceImpl implements CartService  {
         // 获取hash操作对象
         BoundHashOperations<String, Object, Object> boundHashOps = redisTemplate.boundHashOps(key);
 
-        boolean isExist = boundHashOps.hasKey(skuId);
+        boolean isExist = boundHashOps.hasKey(String.valueOf(skuId));
         if (!isExist) {
             // 新增 item 查询spu
             return false;
@@ -154,7 +154,10 @@ public class CartServiceImpl implements CartService  {
         List<Object> list = boundHashOps.values();
         List<Cart> resultList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(list)) {
-            resultList = list.stream().map(o->{JSON.parseObject(JSON.toJSONString(o), Cart.class)}).collect(Collectors.toList());
+            for (Object o : list) {
+                Cart cart = JSON.parseObject(String.valueOf(o), Cart.class);
+                resultList.add(cart);
+            }
         }
         return resultList;
     }
