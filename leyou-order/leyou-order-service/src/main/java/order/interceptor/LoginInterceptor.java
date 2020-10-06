@@ -1,9 +1,10 @@
 package order.interceptor;
 
-import com.leyou.auth.entity.UserInfo;
+
+import com.leyou.auth.dto.UserInfoDTO;
 import com.leyou.auth.utils.JwtUtils;
-import com.leyou.order.properties.JwtProperties;
-import com.leyou.utils.CookieUtils;
+import com.leyou.common.utils.CookieUtils;
+import order.properties.JwtProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,7 +26,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     /**
      * 定义一个线程域，存放登录用户
      */
-    private static final ThreadLocal<UserInfo> t1 = new ThreadLocal<>();
+    private static final ThreadLocal<UserInfoDTO> t1 = new ThreadLocal<>();
 
     public LoginInterceptor(JwtProperties jwtProperties) {
         this.jwtProperties = jwtProperties;
@@ -58,7 +59,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         //3.有token，查询用户信息
         try{
             //4.解析成功，说明已经登录
-            UserInfo userInfo = JwtUtils.getInfoFromToken(token,jwtProperties.getPublicKey());
+            UserInfoDTO userInfo = JwtUtils.getInfoFromToken(token,jwtProperties.getPublicKey());
             //5.放入线程域
             t1.set(userInfo);
             return true;
@@ -97,7 +98,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
        t1.remove();
     }
 
-    public static UserInfo getLoginUser(){
+    public static UserInfoDTO getLoginUser(){
         return t1.get();
     }
 }

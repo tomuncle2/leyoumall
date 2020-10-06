@@ -1,6 +1,7 @@
 package order.service;
 
-import com.leyou.common.pojo.PageResult;
+
+import com.leyou.common.page.PageResult;
 import com.leyou.order.pojo.Order;
 import com.leyou.order.pojo.OrderStatus;
 

@@ -1,6 +1,7 @@
 package order.mapper;
 
-import com.leyou.item.pojo.Stock;
+
+import com.leyou.pojo.Stock;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 import tk.mybatis.mapper.common.Mapper;

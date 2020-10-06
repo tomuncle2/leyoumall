@@ -1,8 +1,9 @@
 package order.utils;
 
 import com.github.wxpay.sdk.WXPay;
-import com.leyou.order.config.PayConfig;
-import com.leyou.order.service.OrderService;
+
+import order.config.PayConfig;
+import order.service.OrderService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

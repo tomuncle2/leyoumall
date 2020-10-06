@@ -1,6 +1,7 @@
 package com.leyou.order.vo;
 
-import com.leyou.comments.pojo.Review;
+
+import com.leyou.order.dto.Review;
 
 /**
  * @Author: 98050

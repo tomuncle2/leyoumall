@@ -2,18 +2,20 @@ package order.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.leyou.auth.entity.UserInfo;
-import com.leyou.common.pojo.PageResult;
-import com.leyou.item.pojo.Stock;
-import com.leyou.order.client.GoodsClient;
-import com.leyou.order.interceptor.LoginInterceptor;
+
+import com.leyou.auth.dto.UserInfoDTO;
+import com.leyou.common.page.PageResult;
+import com.leyou.common.utils.IdWorker;
 import com.leyou.order.pojo.Order;
 import com.leyou.order.pojo.OrderDetail;
 import com.leyou.order.pojo.OrderStatus;
-import com.leyou.order.service.OrderService;
-import com.leyou.order.service.OrderStatusService;
 import com.leyou.order.vo.OrderStatusMessage;
-import com.leyou.utils.IdWorker;
+import com.leyou.pojo.Stock;
+import order.client.GoodsClient;
+import order.interceptor.LoginInterceptor;
+import order.mapper.*;
+import order.service.OrderService;
+import order.service.OrderStatusService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
         //1.生成orderId
         long orderId = idWorker.nextId();
         //2.获取登录的用户
-        UserInfo userInfo = LoginInterceptor.getLoginUser();
+        UserInfoDTO userInfo = LoginInterceptor.getLoginUser();
         //3.初始化数据
         order.setBuyerNick(userInfo.getUsername());
         order.setBuyerRate(false);
@@ -141,7 +143,7 @@ public class OrderServiceImpl implements OrderService {
             //1.分页
             PageHelper.startPage(page,rows);
             //2.获取登录用户
-            UserInfo userInfo = LoginInterceptor.getLoginUser();
+            UserInfoDTO userInfo = LoginInterceptor.getLoginUser();
             //3.查询
             Page<Order> pageInfo = (Page<Order>) this.orderMapper.queryOrderList(userInfo.getId(), status);
             //4.填充orderDetail
@@ -152,7 +154,7 @@ public class OrderServiceImpl implements OrderService {
                 List<OrderDetail> orderDetailList = this.orderDetailMapper.selectByExample(example);
                 order.setOrderDetails(orderDetailList);
             });
-            return new PageResult<>(pageInfo.getTotal(),(long)pageInfo.getPages(), orderList);
+            return new PageResult(pageInfo.getTotal(),(Integer) pageInfo.getPages(), orderList);
         }catch (Exception e){
             logger.error("查询订单出错",e);
             return null;
@@ -167,8 +169,8 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public Boolean updateOrderStatus(Long id, Integer status) {
-        UserInfo userInfo = LoginInterceptor.getLoginUser();
-        Long spuId = this.goodsClient.querySkuById(findSkuIdByOrderId(id)).getSpuId();
+        UserInfoDTO userInfo = LoginInterceptor.getLoginUser();
+        Long spuId = this.goodsClient.querySkuById(findSkuIdByOrderId(id)).getBody().getSpuId();
 
         OrderStatus orderStatus = new OrderStatus();
         orderStatus.setOrderId(id);

@@ -3,8 +3,9 @@ package order.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.leyou.order.interceptor.LoginInterceptor;
-import com.leyou.order.properties.JwtProperties;
+
+import order.interceptor.LoginInterceptor;
+import order.properties.JwtProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

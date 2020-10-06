@@ -10,7 +10,7 @@ import javax.persistence.Table;
  * @Time: 2018-11-15 15:42
  * @Feature: 秒杀订单
  */
-@Table(name = "tb_seckill_order")
+//@Table(name = "tb_seckill_order")
 public class SeckillOrder {
 
     @Id

@@ -1,10 +1,11 @@
 package order.service.impl;
 
-import com.leyou.auth.entity.UserInfo;
-import com.leyou.order.interceptor.LoginInterceptor;
-import com.leyou.order.mapper.AddressMapper;
+
+import com.leyou.auth.dto.UserInfoDTO;
 import com.leyou.order.pojo.Address;
-import com.leyou.order.service.AddressService;
+import order.interceptor.LoginInterceptor;
+import order.mapper.AddressMapper;
+import order.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -24,7 +25,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void deleteAddress(Long addressId) {
-        UserInfo userInfo = LoginInterceptor.getLoginUser();
+        UserInfoDTO userInfo = LoginInterceptor.getLoginUser();
         Example example = new Example(Address.class);
         example.createCriteria().andEqualTo("userId",userInfo.getId()).andEqualTo("id",addressId);
         this.addressMapper.deleteByExample(example);
@@ -32,7 +33,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void updateAddressByUserId(Address address) {
-        UserInfo userInfo = LoginInterceptor.getLoginUser();
+        UserInfoDTO userInfo = LoginInterceptor.getLoginUser();
         address.setUserId(userInfo.getId());
         setDefaultAddress(address);
         this.addressMapper.updateByPrimaryKeySelective(address);
@@ -41,7 +42,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<Address> queryAddressByUserId() {
-        UserInfo userInfo = LoginInterceptor.getLoginUser();
+        UserInfoDTO userInfo = LoginInterceptor.getLoginUser();
         Example example = new Example(Address.class);
         example.createCriteria().andEqualTo("userId",userInfo.getId());
         return this.addressMapper.selectByExample(example);
@@ -49,7 +50,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void addAddressByUserId(Address address) {
-        UserInfo userInfo = LoginInterceptor.getLoginUser();
+        UserInfoDTO userInfo = LoginInterceptor.getLoginUser();
         address.setUserId(userInfo.getId());
         setDefaultAddress(address);
         this.addressMapper.insert(address);
@@ -57,7 +58,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Address queryAddressById(Long addressId) {
-        UserInfo userInfo = LoginInterceptor.getLoginUser();
+        UserInfoDTO userInfo = LoginInterceptor.getLoginUser();
         Example example = new Example(Address.class);
         example.createCriteria().andEqualTo("id",addressId).andEqualTo("userId",userInfo.getId());
         return this.addressMapper.selectByExample(example).get(0);

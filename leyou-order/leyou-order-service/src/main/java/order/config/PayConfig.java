@@ -1,7 +1,8 @@
 package order.config;
 
 import com.github.wxpay.sdk.WXPayConfig;
-import com.leyou.order.properties.PayProperties;
+
+import order.properties.PayProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 

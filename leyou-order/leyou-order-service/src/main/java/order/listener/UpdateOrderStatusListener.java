@@ -1,13 +1,14 @@
 package order.listener;
 
-import com.leyou.comments.pojo.Review;
-import com.leyou.order.mapper.OrderStatusMapper;
+
+import com.leyou.common.utils.JsonUtils;
+import com.leyou.order.dto.Review;
 import com.leyou.order.pojo.OrderStatus;
-import com.leyou.order.service.OrderService;
-import com.leyou.order.service.OrderStatusService;
 import com.leyou.order.vo.CommentsParameter;
 import com.leyou.order.vo.OrderStatusMessage;
-import com.leyou.utils.JsonUtils;
+import order.mapper.OrderStatusMapper;
+import order.service.OrderService;
+import order.service.OrderStatusService;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;

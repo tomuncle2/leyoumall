@@ -1,12 +1,13 @@
 package order.controller;
 
-import com.leyou.common.pojo.PageResult;
+
+import com.leyou.common.page.PageResult;
 import com.leyou.order.pojo.Order;
 import com.leyou.order.pojo.OrderStatus;
-import com.leyou.order.service.OrderService;
-import com.leyou.order.utils.PayHelper;
-import com.leyou.order.utils.PayState;
 import io.swagger.annotations.*;
+import order.service.OrderService;
+import order.utils.PayHelper;
+import order.utils.PayState;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

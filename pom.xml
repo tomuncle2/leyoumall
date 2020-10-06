@@ -25,7 +25,7 @@
         <!--短信服务-->
         <module>sms-service</module>
         <!--订单服务-->
-        <module>order-service</module>
+        <!--<module>order-service</module>-->
         <!--用户服务-->
         <module>leyou-user</module>
         <module>leyou-auth</module>
@@ -61,6 +61,10 @@
         <org.apache.commons.commons-lang3.version>3.4</org.apache.commons.commons-lang3.version>
         <feign.version>1.0</feign.version>
         <amqp.rabbitmq.version>2.0.10</amqp.rabbitmq.version>
+        <wxpay.version>0.0.3</wxpay.version>
+        <swagger.version>2.8.0</swagger.version>
+        <javax.servlet.version>3.1.0</javax.servlet.version>
+        <jwt.version>0.9.1</jwt.version>
     </properties>
 
     <!--版本管理-->
@@ -124,9 +128,33 @@
             </dependency>
 
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${org.apache.commons.commons-lang3.version}</version>
+                <groupId>com.github.wxpay</groupId>
+                <artifactId>wxpay-sdk</artifactId>
+                <version>${wxpay.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
             </dependency>
 
 <!--            <dependency>-->
