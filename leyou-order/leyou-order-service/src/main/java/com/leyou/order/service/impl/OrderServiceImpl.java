@@ -23,7 +23,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -97,6 +96,8 @@ public class OrderServiceImpl implements OrderService {
             //添加订单
             orderDetail.setOrderId(orderId);
         });
+
+        // 扣库存
 
         //8.保存订单详情，使用批量插入功能
         this.orderDetailMapper.insertList(order.getOrderDetails());
